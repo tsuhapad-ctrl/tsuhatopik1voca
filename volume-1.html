@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#FFF9F0">
+  <meta name="description" content="Aplikasi flashcard dan kuis kosakata inti TOPIK I Level 1 untuk pembelajar Indonesia.">
+  <title>TOPIK I Vocabulary Master</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+/* =========================
+   DESIGN SYSTEM
+========================= */
+:root{--bg:#fff9f0;--surface:#fff;--surface2:#fff3df;--text:#24221f;--muted:#6f6a62;--primary:#f6c85f;--primary2:#e8ad2b;--peach:#ffb59d;--mint:#b9dbc8;--danger:#dc625f;--success:#3e9b72;--border:#eadfce;--shadow:0 12px 32px rgba(83,63,35,.10);--radius:24px;--nav:78px}
+body.dark{--bg:#171a19;--surface:#222725;--surface2:#2c302d;--text:#f7f3e9;--muted:#bbb5aa;--primary:#efc35d;--primary2:#ffd375;--peach:#c98372;--mint:#79aa91;--danger:#ff8985;--success:#77cda4;--border:#3c423e;--shadow:0 14px 38px rgba(0,0,0,.24)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:hidden;transition:.25s}button,input,select{font:inherit;color:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 65%,transparent);outline-offset:3px}.kr{font-family:"Noto Sans KR",sans-serif}.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:.88rem}.container{width:min(1120px,100%);margin:auto;padding:24px 18px 110px}.view{display:none;animation:fade .25s ease}.view.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* =========================
+   HEADER / NAVIGATION
+========================= */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}.topbar-inner{height:68px;width:min(1160px,100%);margin:auto;padding:0 18px;display:flex;align-items:center;justify-content:space-between;gap:8px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;min-width:0}.brand-mark{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--peach));display:grid;place-items:center;box-shadow:var(--shadow);flex:none}.brand-copy{white-space:nowrap}.brand-copy small{display:block;font-weight:600;color:var(--muted);font-size:.7rem;letter-spacing:.04em}.top-actions{display:flex;align-items:center;gap:7px}.icon-btn{border:1px solid var(--border);background:var(--surface);border-radius:14px;min-width:44px;height:44px;padding:0 12px}.desktop-nav{display:none}.bottom-nav{position:fixed;z-index:60;bottom:0;left:0;right:0;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));display:grid;grid-template-columns:repeat(5,1fr);background:color-mix(in srgb,var(--surface) 94%,transparent);border-top:1px solid var(--border);backdrop-filter:blur(16px)}.nav-btn{min-height:56px;border:0;background:transparent;border-radius:14px;color:var(--muted);display:grid;place-items:center;gap:1px;font-size:.69rem}.nav-btn span{font-size:1.28rem}.nav-btn.active{background:var(--surface2);color:var(--text);font-weight:700}
+/* =========================
+   CARDS / BUTTONS / FORMS
+========================= */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}.section{margin-top:30px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:14px}.section-head h2,.section-head h3{margin:0}.eyebrow{font-weight:800;letter-spacing:.12em;font-size:.73rem;color:#9a7420;text-transform:uppercase}.btn{min-height:46px;border:0;border-radius:15px;padding:11px 17px;font-weight:750;background:var(--primary);color:#2d2412;box-shadow:0 6px 16px rgba(189,135,21,.18);transition:.18s}.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}.btn.secondary{background:var(--surface);color:var(--text);border:1px solid var(--border);box-shadow:none}.btn.peach{background:var(--peach)}.btn.mint{background:var(--mint)}.btn.danger{background:var(--danger);color:#fff}.btn.full{width:100%}.chip-row{display:flex;gap:8px;overflow-x:auto;padding:2px 1px 8px;scrollbar-width:none}.chip{white-space:nowrap;min-height:42px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:8px 14px}.chip.active{background:var(--text);color:var(--bg);border-color:var(--text)}label.field{display:grid;gap:7px;font-weight:700}.field select,.field input,.search{width:100%;min-height:48px;border:1px solid var(--border);background:var(--surface);border-radius:15px;padding:10px 13px}.grid{display:grid;gap:14px}.progress-track{height:10px;background:var(--surface2);border-radius:99px;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--peach));border-radius:inherit;transition:width .7s cubic-bezier(.2,.8,.2,1)}.badge{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:5px 9px;background:var(--surface2);font-size:.78rem;font-weight:700}
+/* =========================
+   HOME
+========================= */
+.hero{padding:28px 22px;background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--primary) 20%,var(--surface)));position:relative;overflow:hidden}.hero:after{content:"가";position:absolute;right:-8px;bottom:-54px;font:800 10rem "Noto Sans KR";color:color-mix(in srgb,var(--primary) 18%,transparent);transform:rotate(-9deg)}.hero-content{position:relative;z-index:1}.hero h1{font-size:clamp(2rem,7vw,4.6rem);line-height:1.03;margin:8px 0 14px;max-width:760px;letter-spacing:-.045em}.hero p{max-width:620px;color:var(--muted);font-size:1.05rem}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.stats-grid{grid-template-columns:repeat(2,1fr);margin-top:14px}.stat{padding:18px}.stat .num{font-size:1.55rem;font-weight:850;line-height:1.15}.stat .label{font-size:.82rem;color:var(--muted);margin-top:4px}.goal-card,.daily-card{padding:20px}.goal-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.daily-word{font:800 2.4rem "Noto Sans KR";margin:8px 0 0}.quick-grid{grid-template-columns:repeat(2,1fr)}.quick{min-height:105px;text-align:left;padding:16px;border:1px solid var(--border);background:var(--surface);border-radius:20px;font-weight:750;transition:.2s}.quick:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.quick b{display:block;font-size:1.55rem;margin-bottom:8px}.quote{padding:18px 20px;background:linear-gradient(120deg,var(--mint),var(--surface));font-weight:750}
+/* =========================
+   THEMES / VOCABULARY
+========================= */
+.page-title h1{font-size:clamp(1.8rem,5vw,3rem);margin:4px 0}.theme-grid{grid-template-columns:repeat(2,1fr)}.theme-card{padding:17px;min-height:185px;display:flex;flex-direction:column;transition:.2s}.theme-card:hover{transform:translateY(-4px)}.theme-icon{font-size:2rem}.theme-card h3{margin:8px 0 4px;font-size:1rem}.theme-card p{font-size:.8rem;color:var(--muted);margin:0 0 13px;flex:1}.theme-card button{margin-top:10px;background:none;border:0;text-align:left;padding:0;font-weight:750}.toolbar{display:grid;gap:10px;margin:18px 0}.vocab-list{display:grid;gap:12px}.vocab-card{padding:17px;display:grid;grid-template-columns:1fr auto;gap:11px}.vocab-main{min-width:0}.vocab-word{font:750 1.75rem "Noto Sans KR"}.vocab-meaning{font-weight:750}.vocab-example{margin-top:8px;color:var(--muted)}.vocab-actions{display:flex;flex-direction:column;gap:7px}.vocab-actions button{min-width:44px;height:44px;border:1px solid var(--border);background:var(--surface2);border-radius:13px}.load-more{margin:18px auto;display:block}.empty{text-align:center;padding:42px 22px}.empty .emoji{font-size:3rem}
+/* =========================
+   FLASHCARD
+========================= */
+.setup-card{padding:20px}.setup-grid{display:grid;gap:15px}.session-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.flash-scene{perspective:1200px;touch-action:pan-y}.flashcard{height:min(58vh,470px);min-height:360px;position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.75,.2,1);cursor:pointer}.flashcard.flipped{transform:rotateY(180deg)}.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:30px;border:1px solid var(--border);background:linear-gradient(145deg,var(--surface),var(--surface2));box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;padding:28px;text-align:center}.flash-back{transform:rotateY(180deg);background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--mint) 23%,var(--surface)))}.flash-word{font:800 clamp(2.6rem,12vw,5.3rem) "Noto Sans KR";line-height:1.15}.flash-meaning{font-size:clamp(1.6rem,7vw,2.45rem);font-weight:800}.flash-example{font:600 clamp(1.08rem,4vw,1.35rem) "Noto Sans KR";margin-top:18px}.rating-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.rating-grid button{min-height:62px;padding:8px;font-size:.82rem}.swipe-hint{text-align:center;color:var(--muted);font-size:.82rem;margin-top:9px}
+/* =========================
+   QUIZ / GAMES
+========================= */
+.mode-grid{grid-template-columns:repeat(2,1fr)}.mode-card{padding:17px;text-align:left;border:1px solid var(--border);background:var(--surface);border-radius:20px;min-height:145px}.mode-card b{display:block;font-size:1.7rem}.mode-card strong{display:block;margin:7px 0}.mode-card span{font-size:.8rem;color:var(--muted)}.quiz-card{padding:22px}.quiz-word{text-align:center;font:800 clamp(2.3rem,10vw,4.5rem) "Noto Sans KR";margin:16px 0}.quiz-prompt{text-align:center;color:var(--muted)}.answers{display:grid;gap:10px;margin-top:18px}.answer-btn{min-height:58px;border:1px solid var(--border);background:var(--surface2);border-radius:16px;text-align:left;padding:12px 15px;font-weight:700}.answer-btn.correct{background:color-mix(in srgb,var(--success) 22%,var(--surface));border-color:var(--success)}.answer-btn.wrong{background:color-mix(in srgb,var(--danger) 18%,var(--surface));border-color:var(--danger)}.feedback{padding:15px;border-radius:16px;margin-top:14px;background:var(--surface2)}.quiz-input{width:100%;min-height:55px;border:2px solid var(--border);background:var(--surface);border-radius:16px;padding:11px 14px;font-size:1.05rem}.match-grid,.memory-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:18px}.match-card,.memory-card{min-height:68px;border:1px solid var(--border);background:var(--surface2);border-radius:15px;padding:10px;font-weight:700}.match-card.selected{border:3px solid var(--primary2)}.match-card.matched{opacity:.35;background:var(--mint)}.memory-card{font-size:1rem}.memory-card.covered{color:transparent;position:relative}.memory-card.covered:after{content:"?";color:var(--text);position:absolute;inset:0;display:grid;place-items:center;font-size:1.5rem}.result-score{text-align:center;font-size:3.6rem;font-weight:900}.review-item{padding:15px;border-top:1px solid var(--border)}
+/* =========================
+   PROGRESS / MODALS
+========================= */
+.progress-summary{grid-template-columns:repeat(2,1fr)}.progress-theme{padding:13px 0;border-bottom:1px solid var(--border)}.streak-week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:14px}.day{text-align:center;background:var(--surface2);border-radius:13px;padding:9px 2px;font-size:.75rem}.day.done{background:var(--mint);color:#173729}.modal-wrap{position:fixed;z-index:100;inset:0;background:rgba(18,17,15,.55);display:none;align-items:flex-end;justify-content:center;padding:14px}.modal-wrap.open{display:flex;animation:fade .2s}.modal{width:min(620px,100%);max-height:90vh;overflow:auto;background:var(--surface);border-radius:28px;padding:22px;box-shadow:var(--shadow)}.modal-close{float:right}.detail-word{font:800 3rem "Noto Sans KR"}.toast{position:fixed;z-index:120;left:50%;bottom:100px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 16px;border-radius:13px;font-weight:700;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}.confetti{position:fixed;z-index:200;top:-20px;width:9px;height:14px;animation:fall 1.8s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}
+@media(min-width:720px){.container{padding:34px 28px 70px}.bottom-nav{display:none}.desktop-nav{display:flex;gap:5px}.desktop-nav .nav-btn{display:flex;min-height:44px;padding:0 13px;font-size:.84rem}.desktop-nav .nav-btn span{font-size:1rem}.stats-grid{grid-template-columns:repeat(4,1fr)}.quick-grid{grid-template-columns:repeat(5,1fr)}.theme-grid{grid-template-columns:repeat(3,1fr)}.toolbar{grid-template-columns:2fr 1fr}.vocab-list{grid-template-columns:repeat(2,1fr)}.setup-grid{grid-template-columns:repeat(2,1fr)}.mode-grid{grid-template-columns:repeat(5,1fr)}.answers{grid-template-columns:repeat(2,1fr)}.progress-summary{grid-template-columns:repeat(4,1fr)}.modal-wrap{align-items:center}.hero{padding:52px}.daily-goal-grid{grid-template-columns:1.25fr .75fr}.match-grid{grid-template-columns:repeat(4,1fr)}.memory-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1040px){.theme-grid{grid-template-columns:repeat(4,1fr)}.vocab-list{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:420px){.brand-copy small{display:none}.brand-copy{font-size:.9rem}.topbar-inner{padding-inline:12px}.icon-btn{padding:0 9px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+<!-- =========================
+     HEADER / NAVIGATION
+========================= -->
+<header class="topbar"><div class="topbar-inner">
+  <div class="brand" role="button" tabindex="0" data-nav="home"><div class="brand-mark">🇰🇷</div><div class="brand-copy">TOPIK I Master<small>Belajar • Hafalkan • Latihan • Kuasai</small></div></div>
+  <nav class="desktop-nav" aria-label="Navigasi utama"></nav>
+  <div class="top-actions"><button class="icon-btn" id="soundToggle" aria-label="Matikan efek suara" aria-pressed="true">🔊</button><button class="icon-btn" id="themeToggle" aria-label="Ubah mode warna">🌙</button></div>
+</div></header>
+<main class="container">
+  <section id="homeView" class="view active"></section>
+  <section id="themesView" class="view"></section>
+  <section id="listView" class="view"></section>
+  <section id="flashView" class="view"></section>
+  <section id="practiceView" class="view"></section>
+  <section id="quizView" class="view"></section>
+  <section id="progressView" class="view"></section>
+</main>
+<nav class="bottom-nav" aria-label="Navigasi utama"></nav>
+<div id="detailModal" class="modal-wrap" role="dialog" aria-modal="true" aria-label="Detail kosakata"><div class="modal" id="detailContent"></div></div>
+<div id="confirmModal" class="modal-wrap" role="dialog" aria-modal="true" aria-label="Konfirmasi reset"><div class="modal"><h2>Reset seluruh progres?</h2><p class="muted">Apakah kamu yakin ingin menghapus seluruh progres belajar? Tindakan ini tidak dapat dibatalkan.</p><div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn secondary" onclick="closeModal('confirmModal')">Batal</button><button class="btn danger" id="confirmReset">Reset</button></div></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+/* =========================
+   THEME DATABASE
+========================= */
+const themes=[
+ {id:'greetings',name:'Salam & Ungkapan Dasar',icon:'👋',description:'Sapaan dan ungkapan paling sering dipakai.'},
+ {id:'identity',name:'Perkenalan Diri',icon:'🙋',description:'Nama, asal, bahasa, dan informasi diri.'},
+ {id:'family',name:'Keluarga',icon:'👨‍👩‍👧',description:'Anggota keluarga dan hubungan dekat.'},
+ {id:'people',name:'Orang & Hubungan',icon:'👥',description:'Orang di sekitar dan hubungan sosial.'},
+ {id:'numbers-native',name:'Angka Korea',icon:'🔢',description:'Bilangan Korea asli dan penggunaannya.'},
+ {id:'numbers-sino',name:'Angka Sino-Korea',icon:'🔟',description:'Bilangan Sino-Korea untuk tanggal dan uang.'},
+ {id:'date',name:'Hari, Tanggal & Bulan',icon:'📅',description:'Hari, bulan, dan penunjuk waktu.'},
+ {id:'time',name:'Waktu',icon:'⏰',description:'Jam dan keterangan waktu dasar.'},
+ {id:'home',name:'Rumah & Benda',icon:'🏠',description:'Ruangan dan benda yang ada di rumah.'},
+ {id:'school',name:'Sekolah & Belajar',icon:'🏫',description:'Sekolah, kelas, dan peralatan belajar.'},
+ {id:'jobs',name:'Pekerjaan',icon:'💼',description:'Pekerjaan dasar dan tempat kerja.'},
+ {id:'places',name:'Tempat & Bangunan',icon:'🏢',description:'Tempat umum dalam kehidupan sehari-hari.'},
+ {id:'food',name:'Makanan & Minuman',icon:'🍚',description:'Makanan, minuman, buah, dan restoran.'},
+ {id:'shopping',name:'Belanja & Uang',icon:'🛒',description:'Harga, ukuran, dan aktivitas belanja.'},
+ {id:'clothes',name:'Pakaian & Warna',icon:'👕',description:'Pakaian dan warna yang umum.'},
+ {id:'weather',name:'Cuaca & Musim',icon:'🌤️',description:'Cuaca, musim, dan alam dasar.'},
+ {id:'animals',name:'Hewan',icon:'🐶',description:'Nama hewan yang sering ditemui.'},
+ {id:'transport',name:'Transportasi & Perjalanan',icon:'🚍',description:'Kendaraan dan perjalanan dasar.'},
+ {id:'location',name:'Lokasi & Arah',icon:'🗺️',description:'Posisi, arah, dan letak benda.'},
+ {id:'verbs',name:'Kata Kerja Dasar',icon:'🏃',description:'Tindakan penting sehari-hari.'},
+ {id:'adjectives',name:'Kata Sifat Dasar',icon:'✨',description:'Sifat, ukuran, rasa, dan penilaian.'},
+ {id:'feelings',name:'Perasaan & Kondisi',icon:'😊',description:'Perasaan dan keadaan tubuh.'},
+ {id:'hobbies',name:'Hobi & Olahraga',icon:'⚽',description:'Kegiatan waktu luang dan olahraga.'},
+ {id:'health',name:'Tubuh & Kesehatan',icon:'🏥',description:'Bagian tubuh dan kesehatan dasar.'},
+ {id:'communication',name:'Komunikasi',icon:'☎️',description:'Telepon, pesan, dan percakapan.'},
+ {id:'questions',name:'Kata Tanya',icon:'❓',description:'Kata untuk membuat pertanyaan dasar.'},
+ {id:'adverbs',name:'Kata Keterangan',icon:'🔗',description:'Keterangan frekuensi, cara, dan tingkat.'},
+ {id:'daily-items',name:'Benda Sehari-hari',icon:'📦',description:'Benda yang sering digunakan setiap hari.'}
+];
+
+/* =========================
+   VOCABULARY DATABASE
+   Format: Hangul|arti|romanization|jenis Korea|jenis Indonesia|tema|contoh Korea|terjemahan
+========================= */
+const rawVocabulary=`
+안녕하세요|halo / salam|annyeonghaseyo|표현|Ungkapan|greetings|선생님, 안녕하세요?|Halo, Guru.
+안녕히 가세요|selamat jalan|annyeonghi gaseyo|표현|Ungkapan|greetings|안녕히 가세요. 내일 봐요.|Selamat jalan. Sampai besok.
+안녕히 계세요|selamat tinggal|annyeonghi gyeseyo|표현|Ungkapan|greetings|선생님, 안녕히 계세요.|Selamat tinggal, Guru.
+감사합니다|terima kasih|gamsahamnida|표현|Ungkapan|greetings|도와주셔서 감사합니다.|Terima kasih sudah membantu.
+고맙습니다|terima kasih|gomapseumnida|표현|Ungkapan|greetings|선물 주셔서 고맙습니다.|Terima kasih atas hadiahnya.
+죄송합니다|maaf|joesonghamnida|표현|Ungkapan|greetings|늦어서 죄송합니다.|Maaf karena terlambat.
+괜찮아요|tidak apa-apa|gwaenchanayo|표현|Ungkapan|greetings|네, 괜찮아요.|Ya, tidak apa-apa.
+네|ya|ne|감탄사|Kata Seru|greetings|네, 알겠습니다.|Ya, saya mengerti.
+아니요|tidak|aniyo|감탄사|Kata Seru|greetings|아니요, 학생이 아니에요.|Tidak, saya bukan siswa.
+실례합니다|permisi|sillyehamnida|표현|Ungkapan|greetings|실례합니다. 화장실이 어디예요?|Permisi. Di mana toilet?
+처음 뵙겠습니다|senang bertemu dengan Anda|cheoeum boepgetsseumnida|표현|Ungkapan|greetings|처음 뵙겠습니다. 저는 수하입니다.|Senang bertemu dengan Anda. Saya Suha.
+잘 부탁드립니다|mohon bantuannya|jal butakdeurimnida|표현|Ungkapan|greetings|앞으로 잘 부탁드립니다.|Mohon bantuannya mulai sekarang.
+이름|nama|ireum|명사|Kata Benda|identity|제 이름은 수하예요.|Nama saya Suha.
+나라|negara|nara|명사|Kata Benda|identity|어느 나라에서 왔어요?|Anda berasal dari negara mana?
+인도네시아|Indonesia|indonesia|명사|Kata Benda|identity|저는 인도네시아 사람입니다.|Saya orang Indonesia.
+한국|Korea|hanguk|명사|Kata Benda|identity|한국에 가고 싶어요.|Saya ingin pergi ke Korea.
+사람|orang|saram|명사|Kata Benda|identity|저 사람은 제 친구예요.|Orang itu teman saya.
+학생|siswa / pelajar|haksaeng|명사|Kata Benda|identity|저는 학생이에요.|Saya seorang pelajar.
+선생님|guru|seonsaengnim|명사|Kata Benda|identity|제 선생님은 한국 분이세요.|Guru saya orang Korea.
+한국어|bahasa Korea|hangugeo|명사|Kata Benda|identity|저는 한국어를 공부해요.|Saya belajar bahasa Korea.
+인도네시아어|bahasa Indonesia|indonesiaeo|명사|Kata Benda|identity|저는 인도네시아어를 할 수 있어요.|Saya bisa berbahasa Indonesia.
+나이|usia|nai|명사|Kata Benda|identity|나이가 어떻게 되세요?|Berapa usia Anda?
+살|tahun (usia)|sal|의존 명사|Kata Terikat|identity|저는 스물다섯 살이에요.|Saya berusia 25 tahun.
+주소|alamat|juso|명사|Kata Benda|identity|주소를 써 주세요.|Tolong tulis alamatnya.
+가족|keluarga|gajok|명사|Kata Benda|family|우리 가족은 네 명이에요.|Keluarga kami berjumlah empat orang.
+아버지|ayah|abeoji|명사|Kata Benda|family|아버지는 회사원이세요.|Ayah saya pegawai kantor.
+어머니|ibu|eomeoni|명사|Kata Benda|family|어머니는 요리를 잘하세요.|Ibu pandai memasak.
+부모님|orang tua|bumonim|명사|Kata Benda|family|부모님과 같이 살아요.|Saya tinggal bersama orang tua.
+형|kakak laki-laki (bagi laki-laki)|hyeong|명사|Kata Benda|family|형은 대학생이에요.|Kakak laki-laki saya mahasiswa.
+오빠|kakak laki-laki (bagi perempuan)|oppa|명사|Kata Benda|family|오빠가 기타를 쳐요.|Kakak laki-laki saya bermain gitar.
+누나|kakak perempuan (bagi laki-laki)|nuna|명사|Kata Benda|family|누나는 서울에 살아요.|Kakak perempuan saya tinggal di Seoul.
+언니|kakak perempuan (bagi perempuan)|eonni|명사|Kata Benda|family|언니와 쇼핑을 해요.|Saya berbelanja bersama kakak perempuan.
+동생|adik|dongsaeng|명사|Kata Benda|family|동생은 열 살이에요.|Adik berusia sepuluh tahun.
+남동생|adik laki-laki|namdongsaeng|명사|Kata Benda|family|남동생이 축구를 좋아해요.|Adik laki-laki menyukai sepak bola.
+여동생|adik perempuan|yeodongsaeng|명사|Kata Benda|family|여동생과 학교에 가요.|Saya pergi ke sekolah bersama adik perempuan.
+할아버지|kakek|harabeoji|명사|Kata Benda|family|할아버지는 시골에 계세요.|Kakek berada di desa.
+할머니|nenek|halmeoni|명사|Kata Benda|family|할머니께서 저녁을 준비하세요.|Nenek menyiapkan makan malam.
+친구|teman|chingu|명사|Kata Benda|people|친구와 영화를 봐요.|Saya menonton film bersama teman.
+남자|laki-laki|namja|명사|Kata Benda|people|저 남자는 제 형이에요.|Laki-laki itu kakak saya.
+여자|perempuan|yeoja|명사|Kata Benda|people|그 여자는 의사예요.|Perempuan itu dokter.
+아이|anak|ai|명사|Kata Benda|people|아이가 공원에서 놀아요.|Anak bermain di taman.
+어른|orang dewasa|eoreun|명사|Kata Benda|people|어른에게 인사해요.|Saya memberi salam kepada orang dewasa.
+손님|tamu / pelanggan|sonnim|명사|Kata Benda|people|식당에 손님이 많아요.|Ada banyak pelanggan di restoran.
+이웃|tetangga|iut|명사|Kata Benda|people|이웃이 아주 친절해요.|Tetangga sangat ramah.
+남편|suami|nampyeon|명사|Kata Benda|people|남편은 지금 일해요.|Suami sedang bekerja sekarang.
+아내|istri|anae|명사|Kata Benda|people|아내와 같이 여행해요.|Saya bepergian bersama istri.
+아기|bayi|agi|명사|Kata Benda|people|아기가 자고 있어요.|Bayi sedang tidur.
+하나|satu|hana|수사|Kata Bilangan|numbers-native|사과 하나 주세요.|Tolong beri saya satu apel.
+둘|dua|dul|수사|Kata Bilangan|numbers-native|고양이가 두 마리 있어요.|Ada dua ekor kucing.
+셋|tiga|set|수사|Kata Bilangan|numbers-native|책을 세 권 샀어요.|Saya membeli tiga buku.
+넷|empat|net|수사|Kata Bilangan|numbers-native|우리 가족은 네 명이에요.|Keluarga kami empat orang.
+다섯|lima|daseot|수사|Kata Bilangan|numbers-native|사과가 다섯 개 있어요.|Ada lima buah apel.
+여섯|enam|yeoseot|수사|Kata Bilangan|numbers-native|여섯 시에 일어나요.|Saya bangun pukul enam.
+일곱|tujuh|ilgop|수사|Kata Bilangan|numbers-native|일곱 시에 아침을 먹어요.|Saya sarapan pukul tujuh.
+여덟|delapan|yeodeol|수사|Kata Bilangan|numbers-native|수업은 여덟 시에 시작해요.|Kelas dimulai pukul delapan.
+아홉|sembilan|ahop|수사|Kata Bilangan|numbers-native|아홉 시에 회사에 가요.|Saya pergi ke kantor pukul sembilan.
+열|sepuluh|yeol|수사|Kata Bilangan|numbers-native|학생이 열 명 있어요.|Ada sepuluh siswa.
+스물|dua puluh|seumul|수사|Kata Bilangan|numbers-native|저는 스무 살이에요.|Saya berusia dua puluh tahun.
+명|orang (satuan)|myeong|의존 명사|Kata Satuan|numbers-native|학생 두 명이 와요.|Dua siswa datang.
+개|buah (satuan umum)|gae|의존 명사|Kata Satuan|numbers-native|빵 세 개 주세요.|Tolong beri tiga buah roti.
+마리|ekor|mari|의존 명사|Kata Satuan|numbers-native|강아지 한 마리가 있어요.|Ada seekor anjing.
+권|jilid (satuan buku)|gwon|의존 명사|Kata Satuan|numbers-native|책 두 권을 읽어요.|Saya membaca dua buku.
+일|satu (Sino-Korea)|il|수사|Kata Bilangan|numbers-sino|일 층에 은행이 있어요.|Bank ada di lantai satu.
+이|dua (Sino-Korea)|i|수사|Kata Bilangan|numbers-sino|이 번 버스를 타세요.|Naiklah bus nomor dua.
+삼|tiga (Sino-Korea)|sam|수사|Kata Bilangan|numbers-sino|삼월에 한국에 가요.|Saya pergi ke Korea pada bulan Maret.
+사|empat (Sino-Korea)|sa|수사|Kata Bilangan|numbers-sino|사월은 봄이에요.|Bulan April adalah musim semi.
+오|lima (Sino-Korea)|o|수사|Kata Bilangan|numbers-sino|오 분만 기다리세요.|Tunggulah lima menit saja.
+육|enam (Sino-Korea)|yuk|수사|Kata Bilangan|numbers-sino|육 층에 카페가 있어요.|Ada kafe di lantai enam.
+칠|tujuh (Sino-Korea)|chil|수사|Kata Bilangan|numbers-sino|칠월에 방학이 있어요.|Ada liburan pada bulan Juli.
+팔|delapan (Sino-Korea)|pal|수사|Kata Bilangan|numbers-sino|팔 층에 식당이 있어요.|Restoran ada di lantai delapan.
+구|sembilan (Sino-Korea)|gu|수사|Kata Bilangan|numbers-sino|제 생일은 구월이에요.|Ulang tahun saya pada bulan September.
+십|sepuluh (Sino-Korea)|sip|수사|Kata Bilangan|numbers-sino|십 분 후에 만나요.|Mari bertemu sepuluh menit lagi.
+백|seratus|baek|수사|Kata Bilangan|numbers-sino|이것은 백 원이에요.|Ini harganya seratus won.
+천|seribu|cheon|수사|Kata Bilangan|numbers-sino|커피는 삼천 원이에요.|Kopi harganya tiga ribu won.
+원|won (mata uang Korea)|won|의존 명사|Kata Satuan|numbers-sino|김밥은 이천 원이에요.|Gimbap harganya dua ribu won.
+월요일|Senin|woryoil|명사|Kata Benda|date|월요일에 수업이 있어요.|Ada kelas pada hari Senin.
+화요일|Selasa|hwayoil|명사|Kata Benda|date|화요일에 친구를 만나요.|Saya bertemu teman pada hari Selasa.
+수요일|Rabu|suyoil|명사|Kata Benda|date|수요일에 운동해요.|Saya berolahraga pada hari Rabu.
+목요일|Kamis|mogyoil|명사|Kata Benda|date|목요일은 바빠요.|Hari Kamis sibuk.
+금요일|Jumat|geumyoil|명사|Kata Benda|date|금요일에 영화를 봐요.|Saya menonton film pada hari Jumat.
+토요일|Sabtu|toyoil|명사|Kata Benda|date|토요일에 쉬어요.|Saya beristirahat pada hari Sabtu.
+일요일|Minggu|iryoil|명사|Kata Benda|date|일요일에 교회에 가요.|Saya pergi ke gereja pada hari Minggu.
+오늘|hari ini|oneul|명사|Kata Benda|date|오늘 날씨가 좋아요.|Cuaca hari ini bagus.
+내일|besok|naeil|명사|Kata Benda|date|내일 시험이 있어요.|Besok ada ujian.
+어제|kemarin|eoje|명사|Kata Benda|date|어제 친구를 만났어요.|Kemarin saya bertemu teman.
+주|minggu|ju|명사|Kata Benda|date|이번 주에 여행해요.|Saya bepergian minggu ini.
+달|bulan|dal|명사|Kata Benda|date|한 달 동안 한국어를 공부했어요.|Saya belajar bahasa Korea selama sebulan.
+년|tahun|nyeon|의존 명사|Kata Satuan|date|한국어를 이 년 동안 공부했어요.|Saya belajar bahasa Korea selama dua tahun.
+날짜|tanggal|naljja|명사|Kata Benda|date|오늘 날짜가 며칠이에요?|Tanggal berapa hari ini?
+시간|waktu / jam|sigan|명사|Kata Benda|time|시간이 없어요.|Saya tidak punya waktu.
+시|pukul|si|의존 명사|Kata Satuan|time|지금 세 시예요.|Sekarang pukul tiga.
+분|menit|bun|의존 명사|Kata Satuan|time|십 분 기다렸어요.|Saya menunggu sepuluh menit.
+아침|pagi|achim|명사|Kata Benda|time|아침에 우유를 마셔요.|Saya minum susu pada pagi hari.
+점심|siang / makan siang|jeomsim|명사|Kata Benda|time|점심을 같이 먹어요.|Mari makan siang bersama.
+저녁|sore / malam / makan malam|jeonyeok|명사|Kata Benda|time|저녁에는 집에 있어요.|Saya berada di rumah pada malam hari.
+밤|malam|bam|명사|Kata Benda|time|밤 열 시에 자요.|Saya tidur pukul sepuluh malam.
+새벽|dini hari|saebyeok|명사|Kata Benda|time|새벽 다섯 시에 일어났어요.|Saya bangun pukul lima dini hari.
+지금|sekarang|jigeum|부사|Kata Keterangan|time|지금 뭐 해요?|Sedang apa sekarang?
+오전|sebelum tengah hari / AM|ojeon|명사|Kata Benda|time|수업은 오전 아홉 시예요.|Kelas pukul sembilan pagi.
+오후|setelah tengah hari / PM|ohu|명사|Kata Benda|time|오후 두 시에 만나요.|Mari bertemu pukul dua siang.
+집|rumah|jip|명사|Kata Benda|home|저는 집에 있어요.|Saya berada di rumah.
+방|kamar|bang|명사|Kata Benda|home|방에 침대가 있어요.|Ada tempat tidur di kamar.
+거실|ruang keluarga|geosil|명사|Kata Benda|home|가족이 거실에서 텔레비전을 봐요.|Keluarga menonton televisi di ruang keluarga.
+부엌|dapur|bueok|명사|Kata Benda|home|어머니가 부엌에서 요리해요.|Ibu memasak di dapur.
+화장실|toilet / kamar mandi|hwajangsil|명사|Kata Benda|home|화장실이 어디예요?|Di mana toilet?
+문|pintu|mun|명사|Kata Benda|home|문을 닫아 주세요.|Tolong tutup pintunya.
+창문|jendela|changmun|명사|Kata Benda|home|창문을 열어요.|Saya membuka jendela.
+침대|tempat tidur|chimdae|명사|Kata Benda|home|침대에서 자요.|Saya tidur di tempat tidur.
+책상|meja belajar|chaeksang|명사|Kata Benda|home|책상 위에 책이 있어요.|Ada buku di atas meja.
+의자|kursi|uija|명사|Kata Benda|home|의자에 앉으세요.|Silakan duduk di kursi.
+냉장고|lemari es|naengjanggo|명사|Kata Benda|home|냉장고에 물이 있어요.|Ada air di lemari es.
+텔레비전|televisi|tellebijeon|명사|Kata Benda|home|저녁에 텔레비전을 봐요.|Saya menonton televisi pada malam hari.
+학교|sekolah|hakgyo|명사|Kata Benda|school|저는 매일 학교에 가요.|Saya pergi ke sekolah setiap hari.
+교실|ruang kelas|gyosil|명사|Kata Benda|school|학생들이 교실에 있어요.|Para siswa berada di ruang kelas.
+도서관|perpustakaan|doseogwan|명사|Kata Benda|school|도서관에서 책을 읽어요.|Saya membaca buku di perpustakaan.
+책|buku|chaek|명사|Kata Benda|school|한국어 책을 샀어요.|Saya membeli buku bahasa Korea.
+공책|buku tulis|gongchaek|명사|Kata Benda|school|공책에 이름을 써요.|Saya menulis nama di buku tulis.
+연필|pensil|yeonpil|명사|Kata Benda|school|연필로 글씨를 써요.|Saya menulis dengan pensil.
+지우개|penghapus|jiugae|명사|Kata Benda|school|지우개 좀 빌려 주세요.|Tolong pinjamkan penghapus.
+가방|tas|gabang|명사|Kata Benda|school|책을 가방에 넣어요.|Saya memasukkan buku ke dalam tas.
+수업|pelajaran / kelas|sueop|명사|Kata Benda|school|한국어 수업이 재미있어요.|Kelas bahasa Korea menyenangkan.
+시험|ujian|siheom|명사|Kata Benda|school|내일 시험을 봐요.|Besok saya mengikuti ujian.
+숙제|pekerjaan rumah|sukje|명사|Kata Benda|school|저녁에 숙제를 해요.|Saya mengerjakan PR pada malam hari.
+문제|soal / masalah|munje|명사|Kata Benda|school|이 문제는 쉬워요.|Soal ini mudah.
+답|jawaban|dap|명사|Kata Benda|school|답을 공책에 써 주세요.|Tolong tulis jawabannya di buku tulis.
+회사원|pegawai kantor|hoesawon|명사|Kata Benda|jobs|제 아버지는 회사원이에요.|Ayah saya pegawai kantor.
+의사|dokter|uisa|명사|Kata Benda|jobs|의사가 환자를 봐요.|Dokter memeriksa pasien.
+간호사|perawat|ganhosa|명사|Kata Benda|jobs|간호사가 병원에서 일해요.|Perawat bekerja di rumah sakit.
+경찰|polisi|gyeongchal|명사|Kata Benda|jobs|경찰에게 물어보세요.|Silakan bertanya kepada polisi.
+요리사|koki|yorisa|명사|Kata Benda|jobs|요리사가 음식을 만들어요.|Koki membuat makanan.
+가수|penyanyi|gasu|명사|Kata Benda|jobs|그 가수는 노래를 잘해요.|Penyanyi itu pandai bernyanyi.
+직업|pekerjaan / profesi|jigeop|명사|Kata Benda|jobs|직업이 뭐예요?|Apa pekerjaan Anda?
+일|pekerjaan|il|명사|Kata Benda|jobs|오늘 일이 많아요.|Hari ini ada banyak pekerjaan.
+회사|perusahaan / kantor|hoesa|명사|Kata Benda|jobs|아홉 시에 회사에 가요.|Saya pergi ke kantor pukul sembilan.
+농부|petani|nongbu|명사|Kata Benda|jobs|농부가 채소를 키워요.|Petani menanam sayuran.
+은행|bank|eunhaeng|명사|Kata Benda|places|은행에서 돈을 찾아요.|Saya menarik uang di bank.
+병원|rumah sakit|byeongwon|명사|Kata Benda|places|아파서 병원에 가요.|Saya pergi ke rumah sakit karena sakit.
+약국|apotek|yakguk|명사|Kata Benda|places|약국에서 약을 사요.|Saya membeli obat di apotek.
+식당|restoran|sikdang|명사|Kata Benda|places|식당에서 비빔밥을 먹어요.|Saya makan bibimbap di restoran.
+가게|toko|gage|명사|Kata Benda|places|가게에서 과자를 사요.|Saya membeli camilan di toko.
+시장|pasar|sijang|명사|Kata Benda|places|시장에서 과일을 사요.|Saya membeli buah di pasar.
+공원|taman|gongwon|명사|Kata Benda|places|공원에서 산책해요.|Saya berjalan-jalan di taman.
+우체국|kantor pos|ucheguk|명사|Kata Benda|places|우체국에서 편지를 보내요.|Saya mengirim surat di kantor pos.
+공항|bandara|gonghang|명사|Kata Benda|places|공항에서 친구를 만나요.|Saya bertemu teman di bandara.
+역|stasiun|yeok|명사|Kata Benda|places|서울역에서 기차를 타요.|Saya naik kereta di Stasiun Seoul.
+호텔|hotel|hotel|명사|Kata Benda|places|호텔에서 하룻밤 자요.|Saya menginap semalam di hotel.
+카페|kafe|kape|명사|Kata Benda|places|카페에서 커피를 마셔요.|Saya minum kopi di kafe.
+밥|nasi / makanan|bap|명사|Kata Benda|food|저는 밥을 먹어요.|Saya makan nasi.
+김치|kimchi|gimchi|명사|Kata Benda|food|김치가 조금 매워요.|Kimchi agak pedas.
+김밥|gimbap|gimbap|명사|Kata Benda|food|점심에 김밥을 먹었어요.|Saya makan gimbap saat makan siang.
+빵|roti|ppang|명사|Kata Benda|food|아침에 빵을 먹어요.|Saya makan roti pada pagi hari.
+고기|daging|gogi|명사|Kata Benda|food|저는 고기를 좋아해요.|Saya menyukai daging.
+생선|ikan (sebagai makanan)|saengseon|명사|Kata Benda|food|생선을 구워서 먹어요.|Saya memanggang lalu makan ikan.
+계란|telur|gyeran|명사|Kata Benda|food|계란 두 개를 샀어요.|Saya membeli dua butir telur.
+라면|ramyeon|ramyeon|명사|Kata Benda|food|라면을 끓여요.|Saya memasak ramyeon.
+물|air|mul|명사|Kata Benda|food|물을 많이 마셔요.|Saya minum banyak air.
+우유|susu|uyu|명사|Kata Benda|food|아침마다 우유를 마셔요.|Saya minum susu setiap pagi.
+커피|kopi|keopi|명사|Kata Benda|food|커피 한 잔 주세요.|Tolong beri satu cangkir kopi.
+차|teh|cha|명사|Kata Benda|food|따뜻한 차를 마셔요.|Saya minum teh hangat.
+사과|apel|sagwa|명사|Kata Benda|food|사과가 달고 맛있어요.|Apelnya manis dan enak.
+바나나|pisang|banana|명사|Kata Benda|food|바나나 한 개를 먹어요.|Saya makan satu buah pisang.
+딸기|stroberi|ttalgi|명사|Kata Benda|food|딸기를 우유와 같이 먹어요.|Saya makan stroberi bersama susu.
+채소|sayuran|chaeso|명사|Kata Benda|food|채소를 많이 드세요.|Makanlah banyak sayuran.
+메뉴|menu|menyu|명사|Kata Benda|food|메뉴 좀 보여 주세요.|Tolong tunjukkan menunya.
+가격|harga|gagyeok|명사|Kata Benda|shopping|가격이 얼마예요?|Berapa harganya?
+돈|uang|don|명사|Kata Benda|shopping|지갑에 돈이 없어요.|Tidak ada uang di dompet.
+현금|uang tunai|hyeongeum|명사|Kata Benda|shopping|현금으로 계산할게요.|Saya akan membayar dengan uang tunai.
+카드|kartu|kadeu|명사|Kata Benda|shopping|카드로 계산해도 돼요?|Boleh membayar dengan kartu?
+싸다|murah|ssada|형용사|Kata Sifat|shopping|이 가방은 싸요.|Tas ini murah.
+비싸다|mahal|bissada|형용사|Kata Sifat|shopping|그 신발은 너무 비싸요.|Sepatu itu terlalu mahal.
+사이즈|ukuran|saijeu|명사|Kata Benda|shopping|이 사이즈가 작아요.|Ukuran ini kecil.
+영수증|struk|yeongsujeung|명사|Kata Benda|shopping|영수증을 주세요.|Tolong beri struknya.
+쇼핑|berbelanja|syoping|명사|Kata Benda|shopping|주말에 쇼핑을 해요.|Saya berbelanja pada akhir pekan.
+할인|diskon|harin|명사|Kata Benda|shopping|이 옷은 지금 할인 중이에요.|Pakaian ini sedang diskon.
+옷|pakaian|ot|명사|Kata Benda|clothes|새 옷을 샀어요.|Saya membeli pakaian baru.
+바지|celana|baji|명사|Kata Benda|clothes|검은색 바지를 입어요.|Saya memakai celana hitam.
+치마|rok|chima|명사|Kata Benda|clothes|언니가 예쁜 치마를 입었어요.|Kakak memakai rok yang cantik.
+셔츠|kemeja|syeocheu|명사|Kata Benda|clothes|흰색 셔츠를 자주 입어요.|Saya sering memakai kemeja putih.
+신발|sepatu|sinbal|명사|Kata Benda|clothes|새 신발을 신고 학교에 가요.|Saya memakai sepatu baru ke sekolah.
+모자|topi|moja|명사|Kata Benda|clothes|날씨가 더워서 모자를 써요.|Saya memakai topi karena cuaca panas.
+빨간색|warna merah|ppalgansaek|명사|Kata Benda|clothes|저는 빨간색을 좋아해요.|Saya menyukai warna merah.
+파란색|warna biru|paransaek|명사|Kata Benda|clothes|파란색 셔츠를 샀어요.|Saya membeli kemeja biru.
+노란색|warna kuning|noransaek|명사|Kata Benda|clothes|노란색 꽃이 예뻐요.|Bunga kuning itu cantik.
+검은색|warna hitam|geomeunsaek|명사|Kata Benda|clothes|검은색 가방을 샀어요.|Saya membeli tas hitam.
+흰색|warna putih|huinsaek|명사|Kata Benda|clothes|흰색 신발을 신어요.|Saya memakai sepatu putih.
+날씨|cuaca|nalssi|명사|Kata Benda|weather|오늘 날씨가 어때요?|Bagaimana cuaca hari ini?
+봄|musim semi|bom|명사|Kata Benda|weather|봄에는 꽃이 많이 피어요.|Banyak bunga mekar pada musim semi.
+여름|musim panas|yeoreum|명사|Kata Benda|weather|여름은 아주 더워요.|Musim panas sangat panas.
+가을|musim gugur|gaeul|명사|Kata Benda|weather|가을에는 날씨가 좋아요.|Cuaca biasanya bagus pada musim gugur.
+겨울|musim dingin|gyeoul|명사|Kata Benda|weather|겨울에는 눈이 와요.|Salju turun pada musim dingin.
+비|hujan|bi|명사|Kata Benda|weather|밖에 비가 와요.|Di luar sedang turun hujan.
+눈|salju|nun|명사|Kata Benda|weather|아이가 눈을 좋아해요.|Anak menyukai salju.
+바람|angin|baram|명사|Kata Benda|weather|오늘은 바람이 많이 불어요.|Hari ini angin bertiup kencang.
+하늘|langit|haneul|명사|Kata Benda|weather|하늘이 맑고 파래요.|Langit cerah dan biru.
+산|gunung|san|명사|Kata Benda|weather|주말에 산에 가요.|Saya pergi ke gunung pada akhir pekan.
+바다|laut|bada|명사|Kata Benda|weather|여름에 바다에서 수영해요.|Saya berenang di laut pada musim panas.
+꽃|bunga|kkot|명사|Kata Benda|weather|공원에 꽃이 많아요.|Ada banyak bunga di taman.
+강아지|anjing|gangaji|명사|Kata Benda|animals|강아지가 공원에서 뛰어요.|Anjing berlari di taman.
+고양이|kucing|goyangi|명사|Kata Benda|animals|고양이가 의자 밑에 있어요.|Kucing berada di bawah kursi.
+새|burung|sae|명사|Kata Benda|animals|새가 하늘을 날아요.|Burung terbang di langit.
+물고기|ikan|mulgogi|명사|Kata Benda|animals|물고기가 물에서 살아요.|Ikan hidup di air.
+토끼|kelinci|tokki|명사|Kata Benda|animals|토끼가 채소를 먹어요.|Kelinci makan sayuran.
+말|kuda|mal|명사|Kata Benda|animals|말을 타고 싶어요.|Saya ingin naik kuda.
+동물|hewan|dongmul|명사|Kata Benda|animals|저는 동물을 좋아해요.|Saya menyukai hewan.
+버스|bus|beoseu|명사|Kata Benda|transport|학교에 버스로 가요.|Saya pergi ke sekolah dengan bus.
+지하철|kereta bawah tanah|jihacheol|명사|Kata Benda|transport|지하철이 빠르고 편해요.|Kereta bawah tanah cepat dan nyaman.
+기차|kereta|gicha|명사|Kata Benda|transport|부산까지 기차를 타요.|Saya naik kereta sampai Busan.
+택시|taksi|taeksi|명사|Kata Benda|transport|늦어서 택시를 탔어요.|Saya naik taksi karena terlambat.
+자동차|mobil|jadongcha|명사|Kata Benda|transport|아버지는 자동차를 운전하세요.|Ayah mengemudikan mobil.
+비행기|pesawat|bihaenggi|명사|Kata Benda|transport|비행기로 한국에 가요.|Saya pergi ke Korea dengan pesawat.
+자전거|sepeda|jajeongeo|명사|Kata Benda|transport|공원에서 자전거를 타요.|Saya naik sepeda di taman.
+표|tiket|pyo|명사|Kata Benda|transport|기차표를 두 장 샀어요.|Saya membeli dua tiket kereta.
+여행|perjalanan / wisata|yeohaeng|명사|Kata Benda|transport|가족과 제주도로 여행을 가요.|Saya berwisata ke Pulau Jeju bersama keluarga.
+출발|keberangkatan|chulbal|명사|Kata Benda|transport|기차가 곧 출발해요.|Kereta segera berangkat.
+도착|kedatangan|dochak|명사|Kata Benda|transport|오후에 서울에 도착해요.|Saya tiba di Seoul pada sore hari.
+여기|di sini|yeogi|대명사|Kata Ganti|location|여기는 우리 학교예요.|Di sini adalah sekolah kami.
+거기|di situ|geogi|대명사|Kata Ganti|location|거기에 앉으세요.|Silakan duduk di situ.
+저기|di sana|jeogi|대명사|Kata Ganti|location|저기 은행이 있어요.|Ada bank di sana.
+앞|depan|ap|명사|Kata Benda|location|학교 앞에서 만나요.|Mari bertemu di depan sekolah.
+뒤|belakang|dwi|명사|Kata Benda|location|집 뒤에 공원이 있어요.|Ada taman di belakang rumah.
+옆|samping|yeop|명사|Kata Benda|location|약국은 병원 옆에 있어요.|Apotek ada di samping rumah sakit.
+위|atas|wi|명사|Kata Benda|location|책상 위에 연필이 있어요.|Ada pensil di atas meja.
+아래|bawah|arae|명사|Kata Benda|location|의자 아래에 가방이 있어요.|Ada tas di bawah kursi.
+안|dalam|an|명사|Kata Benda|location|가방 안에 지갑이 있어요.|Ada dompet di dalam tas.
+밖|luar|bak|명사|Kata Benda|location|밖에서 친구를 기다려요.|Saya menunggu teman di luar.
+왼쪽|sebelah kiri|oenjjok|명사|Kata Benda|location|화장실은 왼쪽에 있어요.|Toilet ada di sebelah kiri.
+오른쪽|sebelah kanan|oreunjjok|명사|Kata Benda|location|은행은 오른쪽에 있어요.|Bank ada di sebelah kanan.
+가다|pergi|gada|동사|Kata Kerja|verbs|매일 학교에 가요.|Saya pergi ke sekolah setiap hari.
+오다|datang|oda|동사|Kata Kerja|verbs|친구가 우리 집에 와요.|Teman datang ke rumah kami.
+먹다|makan|meokda|동사|Kata Kerja|verbs|점심에 비빔밥을 먹어요.|Saya makan bibimbap saat makan siang.
+마시다|minum|masida|동사|Kata Kerja|verbs|물을 자주 마셔요.|Saya sering minum air.
+보다|melihat / menonton|boda|동사|Kata Kerja|verbs|주말에 영화를 봐요.|Saya menonton film pada akhir pekan.
+읽다|membaca|iktta|동사|Kata Kerja|verbs|도서관에서 책을 읽어요.|Saya membaca buku di perpustakaan.
+쓰다|menulis|sseuda|동사|Kata Kerja|verbs|공책에 이름을 써요.|Saya menulis nama di buku tulis.
+듣다|mendengar|deuttta|동사|Kata Kerja|verbs|한국 노래를 들어요.|Saya mendengarkan lagu Korea.
+말하다|berbicara|malhada|동사|Kata Kerja|verbs|한국어로 천천히 말해요.|Saya berbicara perlahan dalam bahasa Korea.
+공부하다|belajar|gongbuhada|동사|Kata Kerja|verbs|매일 한국어를 공부해요.|Saya belajar bahasa Korea setiap hari.
+일하다|bekerja|ilhada|동사|Kata Kerja|verbs|아버지는 회사에서 일하세요.|Ayah bekerja di kantor.
+자다|tidur|jada|동사|Kata Kerja|verbs|밤 열한 시에 자요.|Saya tidur pukul sebelas malam.
+일어나다|bangun|ireonada|동사|Kata Kerja|verbs|아침 여섯 시에 일어나요.|Saya bangun pukul enam pagi.
+만나다|bertemu|mannada|동사|Kata Kerja|verbs|카페에서 친구를 만나요.|Saya bertemu teman di kafe.
+사다|membeli|sada|동사|Kata Kerja|verbs|시장에서 과일을 사요.|Saya membeli buah di pasar.
+주다|memberi|juda|동사|Kata Kerja|verbs|친구에게 선물을 줘요.|Saya memberi hadiah kepada teman.
+받다|menerima|battta|동사|Kata Kerja|verbs|친구에게서 편지를 받았어요.|Saya menerima surat dari teman.
+만들다|membuat|mandeulda|동사|Kata Kerja|verbs|어머니와 김밥을 만들어요.|Saya membuat gimbap bersama ibu.
+좋아하다|menyukai|joahada|동사|Kata Kerja|verbs|저는 음악을 좋아해요.|Saya menyukai musik.
+운동하다|berolahraga|undonghada|동사|Kata Kerja|verbs|아침마다 공원에서 운동해요.|Saya berolahraga di taman setiap pagi.
+쉬다|beristirahat|swida|동사|Kata Kerja|verbs|일요일에는 집에서 쉬어요.|Saya beristirahat di rumah pada hari Minggu.
+기다리다|menunggu|gidarida|동사|Kata Kerja|verbs|역에서 친구를 기다려요.|Saya menunggu teman di stasiun.
+앉다|duduk|antta|동사|Kata Kerja|verbs|의자에 앉으세요.|Silakan duduk di kursi.
+열다|membuka|yeolda|동사|Kata Kerja|verbs|창문을 열어 주세요.|Tolong buka jendelanya.
+닫다|menutup|dattta|동사|Kata Kerja|verbs|문을 닫아 주세요.|Tolong tutup pintunya.
+크다|besar|keuda|형용사|Kata Sifat|adjectives|이 가방은 아주 커요.|Tas ini sangat besar.
+작다|kecil|jaktta|형용사|Kata Sifat|adjectives|제 방은 조금 작아요.|Kamar saya agak kecil.
+많다|banyak|manta|형용사|Kata Sifat|adjectives|교실에 학생이 많아요.|Ada banyak siswa di kelas.
+적다|sedikit|jeoktta|형용사|Kata Sifat|adjectives|오늘은 사람이 적어요.|Hari ini orangnya sedikit.
+좋다|bagus / baik|jota|형용사|Kata Sifat|adjectives|오늘 기분이 좋아요.|Suasana hati saya baik hari ini.
+나쁘다|buruk / tidak baik|nappeuda|형용사|Kata Sifat|adjectives|오늘 날씨가 나빠요.|Cuaca hari ini buruk.
+예쁘다|cantik|yeppeuda|형용사|Kata Sifat|adjectives|이 꽃이 정말 예뻐요.|Bunga ini sangat cantik.
+맛있다|enak|masittta|형용사|Kata Sifat|adjectives|한국 음식이 맛있어요.|Makanan Korea enak.
+맛없다|tidak enak|madeoptta|형용사|Kata Sifat|adjectives|이 커피는 맛없어요.|Kopi ini tidak enak.
+쉽다|mudah|swiptta|형용사|Kata Sifat|adjectives|이 문제는 쉬워요.|Soal ini mudah.
+어렵다|sulit|eoryeoptta|형용사|Kata Sifat|adjectives|한국어 발음이 어려워요.|Pelafalan bahasa Korea sulit.
+빠르다|cepat|ppareuda|형용사|Kata Sifat|adjectives|지하철이 버스보다 빨라요.|Kereta bawah tanah lebih cepat daripada bus.
+느리다|lambat|neurida|형용사|Kata Sifat|adjectives|이 버스는 조금 느려요.|Bus ini agak lambat.
+덥다|panas (cuaca)|deoptta|형용사|Kata Sifat|adjectives|오늘은 아주 더워요.|Hari ini sangat panas.
+춥다|dingin (cuaca)|chupda|형용사|Kata Sifat|adjectives|겨울에는 아주 추워요.|Musim dingin terasa sangat dingin.
+따뜻하다|hangat|ttatteuthada|형용사|Kata Sifat|adjectives|따뜻한 차를 마셔요.|Saya minum teh hangat.
+차갑다|dingin (benda)|chagaptta|형용사|Kata Sifat|adjectives|물이 너무 차가워요.|Airnya terlalu dingin.
+재미있다|menarik / menyenangkan|jaemiittta|형용사|Kata Sifat|adjectives|이 영화는 재미있어요.|Film ini menarik.
+바쁘다|sibuk|bappeuda|형용사|Kata Sifat|adjectives|오늘은 일이 많아서 바빠요.|Saya sibuk hari ini karena banyak pekerjaan.
+기쁘다|senang|gippeuda|형용사|Kata Sifat|feelings|친구를 만나서 기뻐요.|Saya senang karena bertemu teman.
+슬프다|sedih|seulpeuda|형용사|Kata Sifat|feelings|슬픈 영화를 봤어요.|Saya menonton film sedih.
+무섭다|takut / menakutkan|museoptta|형용사|Kata Sifat|feelings|밤에 혼자 있으면 무서워요.|Saya takut jika sendirian pada malam hari.
+피곤하다|lelah|pigonhada|형용사|Kata Sifat|feelings|오늘 일을 많이 해서 피곤해요.|Saya lelah karena banyak bekerja hari ini.
+행복하다|bahagia|haengbokhada|형용사|Kata Sifat|feelings|가족과 함께 있어서 행복해요.|Saya bahagia karena bersama keluarga.
+아프다|sakit|apeuda|형용사|Kata Sifat|feelings|머리가 아파서 쉬어요.|Saya beristirahat karena sakit kepala.
+배고프다|lapar|baegopeuda|형용사|Kata Sifat|feelings|아침을 안 먹어서 배고파요.|Saya lapar karena tidak sarapan.
+목마르다|haus|mongmareuda|형용사|Kata Sifat|feelings|운동해서 목이 말라요.|Saya haus setelah berolahraga.
+괜찮다|baik-baik saja|gwaenchanta|형용사|Kata Sifat|feelings|이제 몸이 괜찮아요.|Sekarang tubuh saya sudah baik.
+졸리다|mengantuk|jollida|형용사|Kata Sifat|feelings|늦게 자서 졸려요.|Saya mengantuk karena tidur larut.
+취미|hobi|chwimi|명사|Kata Benda|hobbies|제 취미는 독서예요.|Hobi saya membaca.
+음악|musik|eumak|명사|Kata Benda|hobbies|저는 음악을 자주 들어요.|Saya sering mendengarkan musik.
+노래|lagu|norae|명사|Kata Benda|hobbies|한국 노래를 좋아해요.|Saya menyukai lagu Korea.
+영화|film|yeonghwa|명사|Kata Benda|hobbies|주말에 영화를 봐요.|Saya menonton film pada akhir pekan.
+사진|foto|sajin|명사|Kata Benda|hobbies|여행할 때 사진을 많이 찍어요.|Saya mengambil banyak foto saat bepergian.
+축구|sepak bola|chukgu|명사|Kata Benda|hobbies|친구들과 축구를 해요.|Saya bermain sepak bola bersama teman-teman.
+수영|renang|suyeong|명사|Kata Benda|hobbies|여름에 수영을 배워요.|Saya belajar renang pada musim panas.
+산책|jalan-jalan|sanchaek|명사|Kata Benda|hobbies|저녁에 공원에서 산책해요.|Saya berjalan-jalan di taman pada malam hari.
+춤|tarian|chum|명사|Kata Benda|hobbies|동생이 춤을 잘 춰요.|Adik pandai menari.
+독서|membaca buku|dokseo|명사|Kata Benda|hobbies|독서는 제 취미예요.|Membaca adalah hobi saya.
+몸|tubuh|mom|명사|Kata Benda|health|몸이 조금 아파요.|Tubuh saya agak sakit.
+머리|kepala / rambut|meori|명사|Kata Benda|health|머리가 아파요.|Kepala saya sakit.
+얼굴|wajah|eolgul|명사|Kata Benda|health|찬물로 얼굴을 씻어요.|Saya mencuci wajah dengan air dingin.
+눈|mata|nun|명사|Kata Benda|health|눈이 크고 예뻐요.|Matanya besar dan cantik.
+코|hidung|ko|명사|Kata Benda|health|감기에 걸려서 코가 막혔어요.|Hidung saya tersumbat karena pilek.
+입|mulut|ip|명사|Kata Benda|health|입을 크게 여세요.|Bukalah mulut lebar-lebar.
+손|tangan|son|명사|Kata Benda|health|밥을 먹기 전에 손을 씻어요.|Saya mencuci tangan sebelum makan.
+발|kaki|bal|명사|Kata Benda|health|많이 걸어서 발이 아파요.|Kaki saya sakit karena banyak berjalan.
+약|obat|yak|명사|Kata Benda|health|밥을 먹고 약을 드세요.|Minumlah obat setelah makan.
+감기|flu|gamgi|명사|Kata Benda|health|감기에 걸려서 병원에 갔어요.|Saya pergi ke rumah sakit karena flu.
+전화|telepon|jeonhwa|명사|Kata Benda|communication|저녁에 친구에게 전화해요.|Saya menelepon teman pada malam hari.
+휴대폰|ponsel|hyudaepon|명사|Kata Benda|communication|휴대폰이 가방 안에 있어요.|Ponsel ada di dalam tas.
+번호|nomor|beonho|명사|Kata Benda|communication|전화번호가 뭐예요?|Berapa nomor telepon Anda?
+편지|surat|pyeonji|명사|Kata Benda|communication|친구에게 편지를 써요.|Saya menulis surat kepada teman.
+메시지|pesan|mesiji|명사|Kata Benda|communication|친구에게 메시지를 보냈어요.|Saya mengirim pesan kepada teman.
+이야기|cerita / pembicaraan|iyagi|명사|Kata Benda|communication|친구와 이야기를 많이 해요.|Saya banyak berbincang dengan teman.
+질문|pertanyaan|jilmun|명사|Kata Benda|communication|선생님께 질문해요.|Saya bertanya kepada guru.
+대답|jawaban / respons|daedap|명사|Kata Benda|communication|질문에 대답해 주세요.|Tolong jawab pertanyaannya.
+누구|siapa|nugu|대명사|Kata Ganti|questions|저 사람은 누구예요?|Siapa orang itu?
+뭐|apa|mwo|대명사|Kata Ganti|questions|지금 뭐 해요?|Sedang apa sekarang?
+무엇|apa (bentuk penuh dari 뭐)|mueot|대명사|Kata Ganti|questions|무엇을 찾고 있어요?|Apa yang sedang Anda cari?
+어디|di mana|eodi|대명사|Kata Ganti|questions|화장실이 어디예요?|Di mana toilet?
+언제|kapan|eonje|부사|Kata Keterangan|questions|언제 한국에 가요?|Kapan pergi ke Korea?
+왜|mengapa|wae|부사|Kata Keterangan|questions|왜 한국어를 공부해요?|Mengapa belajar bahasa Korea?
+어떻게|bagaimana|eotteoke|부사|Kata Keterangan|questions|학교에 어떻게 가요?|Bagaimana pergi ke sekolah?
+어느|yang mana|eoneu|관형사|Kata Pewatas|questions|어느 나라에서 왔어요?|Berasal dari negara mana?
+몇|berapa|myeot|관형사|Kata Pewatas|questions|가족이 몇 명이에요?|Keluarga Anda ada berapa orang?
+얼마|berapa (harga/jumlah)|eolma|명사|Kata Benda|questions|이 가방은 얼마예요?|Berapa harga tas ini?
+무슨|apa / jenis apa|museun|관형사|Kata Pewatas|questions|무슨 음식을 좋아해요?|Makanan apa yang disukai?
+아주|sangat|aju|부사|Kata Keterangan|adverbs|오늘 날씨가 아주 좋아요.|Cuaca hari ini sangat bagus.
+너무|terlalu / sangat|neomu|부사|Kata Keterangan|adverbs|이 음식은 너무 매워요.|Makanan ini terlalu pedas.
+조금|sedikit / agak|jogeum|부사|Kata Keterangan|adverbs|물을 조금 마셔요.|Saya minum sedikit air.
+많이|banyak|mani|부사|Kata Keterangan|adverbs|한국어를 많이 연습해요.|Saya banyak berlatih bahasa Korea.
+잘|dengan baik|jal|부사|Kata Keterangan|adverbs|동생은 노래를 잘해요.|Adik pandai bernyanyi.
+빨리|dengan cepat|ppalli|부사|Kata Keterangan|adverbs|빨리 학교에 가세요.|Pergilah ke sekolah dengan cepat.
+천천히|dengan perlahan|cheoncheonhi|부사|Kata Keterangan|adverbs|천천히 말해 주세요.|Tolong bicara perlahan.
+자주|sering|jaju|부사|Kata Keterangan|adverbs|저는 도서관에 자주 가요.|Saya sering pergi ke perpustakaan.
+항상|selalu|hangsang|부사|Kata Keterangan|adverbs|저는 항상 아침을 먹어요.|Saya selalu sarapan.
+가끔|kadang-kadang|gakkeum|부사|Kata Keterangan|adverbs|가끔 친구와 영화를 봐요.|Saya kadang-kadang menonton film bersama teman.
+같이|bersama|gachi|부사|Kata Keterangan|adverbs|우리 같이 공부해요.|Mari belajar bersama.
+다시|lagi / kembali|dasi|부사|Kata Keterangan|adverbs|다시 말해 주세요.|Tolong katakan lagi.
+매일|setiap hari|maeil|부사|Kata Keterangan|adverbs|매일 한국어를 공부해요.|Saya belajar bahasa Korea setiap hari.
+먼저|terlebih dahulu|meonjeo|부사|Kata Keterangan|adverbs|손을 먼저 씻으세요.|Cucilah tangan terlebih dahulu.
+지갑|dompet|jigap|명사|Kata Benda|daily-items|지갑이 가방 안에 있어요.|Dompet ada di dalam tas.
+열쇠|kunci|yeolsoe|명사|Kata Benda|daily-items|집 열쇠를 찾고 있어요.|Saya sedang mencari kunci rumah.
+우산|payung|usan|명사|Kata Benda|daily-items|비가 와서 우산을 써요.|Saya memakai payung karena hujan.
+시계|jam|sigye|명사|Kata Benda|daily-items|시계를 보고 시간을 확인해요.|Saya melihat jam dan memeriksa waktu.
+안경|kacamata|angyeong|명사|Kata Benda|daily-items|책을 읽을 때 안경을 써요.|Saya memakai kacamata saat membaca buku.
+종이|kertas|jongi|명사|Kata Benda|daily-items|종이에 이름을 써요.|Saya menulis nama di kertas.
+컵|cangkir / gelas|keop|명사|Kata Benda|daily-items|컵에 물을 따라요.|Saya menuangkan air ke dalam gelas.
+병|botol|byeong|명사|Kata Benda|daily-items|물 한 병 주세요.|Tolong beri satu botol air.
+사진기|kamera|sajingi|명사|Kata Benda|daily-items|사진기로 가족 사진을 찍어요.|Saya mengambil foto keluarga dengan kamera.
+선물|hadiah|seonmul|명사|Kata Benda|daily-items|친구에게 선물을 줘요.|Saya memberi hadiah kepada teman.
+컴퓨터|komputer|keompyuteo|명사|Kata Benda|daily-items|컴퓨터로 숙제를 해요.|Saya mengerjakan PR dengan komputer.
+달력|kalender|dallyeok|명사|Kata Benda|daily-items|달력을 보고 날짜를 확인해요.|Saya melihat kalender untuk mengecek tanggal.
+`.trim();
+
+const vocabularyData=rawVocabulary.split('\n').filter(Boolean).map((line,index)=>{
+ const [korean,meaning,romanization,type,typeId,theme,exampleKr,exampleId]=line.split('|');
+ return{id:index+1,korean,meaning,romanization,type,typeId,theme,exampleKr,exampleId};
+});
+
+/* =========================
+   STATE / LOCALSTORAGE
+========================= */
+const KEYS={progress:'topik1_progress',favorites:'topik1_favorites',settings:'topik1_settings',streak:'topik1_streak',goal:'topik1_daily_goal'};
+const load=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
+const save=(key,val)=>localStorage.setItem(key,JSON.stringify(val));
+let progress=load(KEYS.progress,{}),favorites=new Set(load(KEYS.favorites,[])),settings=load(KEYS.settings,{dark:false,sound:true}),streak=load(KEYS.streak,{dates:[]}),daily=load(KEYS.goal,{target:10,date:'',words:[]});
+if(typeof settings.sound!=='boolean')settings.sound=true;
+let currentView='home',selectedTheme=null,listMode='all',listLimit=24,flashSession=null,quizSession=null;
+document.body.classList.toggle('dark',!!settings.dark);
+function p(id){return progress[id]||{mastery:0,wrong:0,correct:0,lastReviewed:null,status:'NEW'}}
+function setP(id,patch){progress[id]={...p(id),...patch};save(KEYS.progress,progress)}
+function today(){return new Date().toLocaleDateString('en-CA')}
+function markActivity(id){if(!streak.dates.includes(today())){streak.dates.push(today());streak.dates=streak.dates.slice(-120);save(KEYS.streak,streak)}if(id&&!daily.words.includes(id)){if(daily.date!==today())daily={target:daily.target,date:today(),words:[]};daily.words.push(id);save(KEYS.goal,daily)}}
+function stats(){let learned=0,mastered=0,difficult=0;vocabularyData.forEach(w=>{const x=p(w.id);if(x.mastery>0)learned++;if(x.mastery>=5)mastered++;if(x.wrong>0&&x.mastery<5)difficult++});return{total:vocabularyData.length,learned,mastered,difficult}}
+function masteryPct(words){if(!words.length)return 0;return Math.round(words.reduce((a,w)=>a+p(w.id).mastery,0)/(words.length*5)*100)}
+function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function getTheme(id){return themes.find(t=>t.id===id)}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2200)}
+
+/* =========================
+   AUDIO / SOUND EFFECTS
+========================= */
+function speakKorean(text){if(!('speechSynthesis'in window)){toast('Audio belum didukung browser ini.');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='ko-KR';const voices=speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang.toLowerCase().startsWith('ko'))||null;u.rate=.82;speechSynthesis.speak(u);markActivity()}
+let audioContext=null;
+function getAudioContext(){if(!settings.sound)return null;const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return null;if(!audioContext)audioContext=new AudioCtx();if(audioContext.state==='suspended')audioContext.resume();return audioContext}
+function soundTone(freq,duration=.1,delay=0,type='sine',volume=.055){const ctx=getAudioContext();if(!ctx)return;const start=ctx.currentTime+delay,osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,start);gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(volume,start+.012);gain.gain.exponentialRampToValueAtTime(.0001,start+duration);osc.connect(gain);gain.connect(ctx.destination);osc.start(start);osc.stop(start+duration+.02)}
+function playSound(kind='click'){
+ if(!settings.sound)return;
+ const patterns={click:[[520,.045,0,'sine',.035]],flip:[[330,.055,0,'sine',.035],[470,.055,.045,'sine',.03]],correct:[[523,.09,0,'sine',.055],[659,.1,.075,'sine',.055],[784,.14,.15,'sine',.06]],wrong:[[235,.12,0,'triangle',.05],[175,.18,.1,'triangle',.045]],match:[[660,.08,0,'sine',.05],[880,.14,.07,'sine',.055]],finish:[[523,.1,0,'sine',.05],[659,.1,.09,'sine',.05],[784,.1,.18,'sine',.055],[1047,.24,.27,'sine',.06]]};
+ (patterns[kind]||patterns.click).forEach(n=>soundTone(...n));
+}
+function updateSoundButton(){const b=document.getElementById('soundToggle');if(!b)return;b.textContent=settings.sound?'🔊':'🔇';b.setAttribute('aria-pressed',String(settings.sound));b.setAttribute('aria-label',settings.sound?'Matikan efek suara':'Nyalakan efek suara')}
+function toggleSound(){settings.sound=!settings.sound;save(KEYS.settings,settings);updateSoundButton();if(settings.sound)playSound('correct');toast(settings.sound?'Efek suara dinyalakan. 🔊':'Efek suara dimatikan. 🔇');if(currentView==='progress')renderProgress()}
+
+/* =========================
+   NAVIGATION / RENDERING
+========================= */
+const navItems=[['home','🏠','Beranda'],['themes','🗂️','Tema'],['flash','🃏','Flashcard'],['practice','🎮','Latihan'],['progress','📊','Progres']];
+function renderNav(){const html=navItems.map(([id,icon,label])=>`<button class="nav-btn ${currentView===id?'active':''}" data-nav="${id}" aria-label="${label}"><span>${icon}</span>${label}</button>`).join('');document.querySelectorAll('.bottom-nav,.desktop-nav').forEach(n=>n.innerHTML=html)}
+function navigate(view,opts={}){if(view!=='quiz'){clearInterval(startSpeedTimer.t);clearInterval(startMemoryTimer.t)}currentView=view;document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));const el=document.getElementById(view+'View');if(el)el.classList.add('active');renderNav();if(view==='home')renderHome();if(view==='themes')renderThemes();if(view==='flash')renderFlashSetup(opts);if(view==='practice')renderPractice();if(view==='progress')renderProgress();window.scrollTo({top:0,behavior:'smooth'})}
+document.addEventListener('click',e=>{const n=e.target.closest('[data-nav]');if(n)navigate(n.dataset.nav)});
+
+/* =========================
+   HOME DASHBOARD
+========================= */
+function currentStreak(){let count=0,d=new Date();for(let i=0;i<365;i++){const key=d.toLocaleDateString('en-CA');if(streak.dates.includes(key))count++;else if(i>0)break;d.setDate(d.getDate()-1)}return count}
+function renderHome(){const s=stats(),pct=masteryPct(vocabularyData),dayWord=vocabularyData[Math.floor((new Date().setHours(0,0,0,0)/86400000)%vocabularyData.length)],goalCount=daily.date===today()?daily.words.length:0;document.getElementById('homeView').innerHTML=`
+ <article class="hero card"><div class="hero-content"><span class="eyebrow">Kosakata Inti TOPIK I Level 1</span><h1>TOPIK I<br>Vocabulary Master</h1><p>Kosakata Bahasa Korea Level 1 untuk pembelajar Indonesia. Hafalkan sedikit demi sedikit, latih, lalu kuasai.</p><div class="hero-actions"><button class="btn" onclick="navigate('flash')">Mulai Belajar</button><button class="btn secondary" onclick="navigate('themes')">Lihat Tema</button></div></div></article>
+ <div class="grid stats-grid"><div class="card stat"><div class="num">${s.learned} / ${s.total}</div><div class="label">Kosakata Dipelajari</div></div><div class="card stat"><div class="num">${s.mastered}</div><div class="label">Sudah Dikuasai</div></div><div class="card stat"><div class="num">${s.difficult}</div><div class="label">Perlu Diulang</div></div><div class="card stat"><div class="num">🔥 ${currentStreak()} Hari</div><div class="label">Study Streak</div></div></div>
+ <section class="section card goal-card"><div class="goal-top"><div><b>Progress TOPIK Level 1</b><div class="muted small">Hebat! Kamu semakin dekat dengan targetmu.</div></div><strong>${pct}%</strong></div><div class="progress-track" style="margin-top:13px"><div class="progress-fill" style="width:${pct}%"></div></div></section>
+ <section class="section"><div class="section-head"><h2>Quick Study</h2></div><div class="grid quick-grid"><button class="quick" onclick="navigate('flash')"><b>🃏</b>Mulai Flashcard</button><button class="quick" onclick="startQuickQuiz()"><b>🎯</b>Latihan Hari Ini</button><button class="quick" onclick="openSpecialList('difficult')"><b>🔥</b>Kosakata Sulit</button><button class="quick" onclick="openSpecialList('favorite')"><b>❤️</b>Favorit</button><button class="quick" onclick="startRandomStudy()"><b>🎲</b>Belajar Acak</button></div></section>
+ <section class="section grid daily-goal-grid"><article class="card daily-card"><span class="eyebrow">오늘의 단어 · Kata Hari Ini</span><div class="daily-word">${dayWord.korean}</div><h3>${dayWord.meaning}</h3><p><button class="icon-btn" onclick="speakKorean('${dayWord.korean}')" aria-label="Dengarkan ${dayWord.korean}">🔊</button> <span class="kr">${dayWord.exampleKr}</span><br><span class="muted">${dayWord.exampleId}</span></p><button class="btn" onclick="openDetail(${dayWord.id})">Pelajari Kata Ini</button></article>
+ <article class="card goal-card"><div class="goal-top"><div><span class="eyebrow">Target Hari Ini</span><h2 style="margin:4px 0">${goalCount} / ${daily.target} kata</h2></div><select aria-label="Pilih target harian" onchange="setDailyTarget(this.value)" style="min-height:44px;border:1px solid var(--border);border-radius:13px;background:var(--surface);padding:8px"><option ${daily.target==5?'selected':''}>5</option><option ${daily.target==10?'selected':''}>10</option><option ${daily.target==20?'selected':''}>20</option><option ${daily.target==30?'selected':''}>30</option><option ${daily.target==50?'selected':''}>50</option></select></div><div class="progress-track" style="margin:15px 0"><div class="progress-fill" style="width:${Math.min(100,goalCount/daily.target*100)}%"></div></div><p class="muted">10 kata hari ini lebih baik daripada 0. 🌱</p></article></section>
+ <section class="section card quote">“Sedikit demi sedikit, pasti hafal.” &nbsp; 오늘도 화이팅! 🌱</section>`}
+function setDailyTarget(v){daily.target=+v;save(KEYS.goal,daily);renderHome()}
+function startRandomStudy(){startFlash({count:20,order:'random',mode:'mixed',theme:'all',type:'all',status:'all'})}
+
+/* =========================
+   THEMES / LIST / SEARCH
+========================= */
+function renderThemes(){document.getElementById('themesView').innerHTML=`<div class="page-title"><span class="eyebrow">Belajar Terstruktur</span><h1>Tema Kosakata</h1><p class="muted">Pilih tema supaya hafalan lebih mudah terhubung dengan konteks.</p></div><div class="grid theme-grid section">${themes.map(t=>{const words=vocabularyData.filter(w=>w.theme===t.id),pct=masteryPct(words);return`<article class="card theme-card"><div class="theme-icon">${t.icon}</div><h3>${t.name}</h3><p>${t.description}</p><div class="small"><b>${words.length} Kosakata</b> · ${pct}%</div><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div><button onclick="openTheme('${t.id}')">Mulai Belajar →</button></article>`}).join('')}</div>`}
+function openTheme(id){selectedTheme=id;listMode='all';listLimit=24;renderList()}
+function openSpecialList(mode){selectedTheme=null;listMode=mode;listLimit=24;renderList()}
+function filteredWords(){const q=(document.getElementById('vocabSearch')?.value||'').toLowerCase().trim();let words=selectedTheme?vocabularyData.filter(w=>w.theme===selectedTheme):[...vocabularyData];if(listMode==='new')words=words.filter(w=>p(w.id).mastery===0);if(listMode==='learning')words=words.filter(w=>p(w.id).mastery>0&&p(w.id).mastery<5);if(listMode==='mastered')words=words.filter(w=>p(w.id).mastery>=5);if(listMode==='favorite')words=words.filter(w=>favorites.has(w.id));if(listMode==='difficult')words=words.filter(w=>p(w.id).wrong>0).sort((a,b)=>p(b.id).wrong-p(a.id).wrong);if(q)words=words.filter(w=>[w.korean,w.meaning,w.romanization].some(x=>x.toLowerCase().includes(q)));return words}
+function renderList(){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('listView').classList.add('active');currentView='themes';renderNav();const t=selectedTheme?getTheme(selectedTheme):null;const title=t?`${t.icon} ${t.name}`:listMode==='favorite'?'❤️ Kosakata Favorit':listMode==='difficult'?'🔥 Kosakata Sulit':'🏆 Sudah Dikuasai';document.getElementById('listView').innerHTML=`<div class="page-title"><button class="btn secondary" onclick="navigate('themes')">← Kembali</button><h1>${title}</h1><p class="muted" id="listCount"></p></div><div class="toolbar"><input id="vocabSearch" class="search" placeholder="Cari Hangul, arti, atau romanization..." aria-label="Cari kosakata" oninput="updateListCards()"><button class="btn" onclick="startFlashFromCurrent()">🃏 Pelajari Daftar Ini</button></div><div class="chip-row">${[['all','Semua'],['new','Belum Dipelajari'],['learning','Sedang Dipelajari'],['mastered','Dikuasai'],['favorite','Favorit'],['difficult','Sulit']].map(([id,n])=>`<button class="chip ${listMode===id?'active':''}" onclick="setListMode('${id}')">${n}</button>`).join('')}</div><div id="vocabCards" class="vocab-list section"></div><button id="loadMore" class="btn secondary load-more" onclick="listLimit+=24;updateListCards()">Muat Lebih Banyak</button>`;updateListCards();window.scrollTo(0,0)}
+function setListMode(m){listMode=m;listLimit=24;renderList()}
+function updateListCards(){const words=filteredWords();document.getElementById('listCount').textContent=`${words.length} kosakata`;const box=document.getElementById('vocabCards');if(!words.length){box.innerHTML=`<div class="card empty"><div class="emoji">${listMode==='favorite'?'❤️':'🎉'}</div><h3>${listMode==='favorite'?'Belum ada kosakata favorit.':'Belum ada kosakata di bagian ini.'}</h3><p class="muted">${listMode==='favorite'?'Tekan ikon ♥ pada kosakata yang ingin kamu simpan.':'Lanjutkan latihan untuk memperbarui koleksimu.'}</p></div>`}else box.innerHTML=words.slice(0,listLimit).map(v=>vocabCard(v)).join('');document.getElementById('loadMore').classList.toggle('hidden',words.length<=listLimit)}
+function vocabCard(w){const x=p(w.id);return`<article class="card vocab-card"><div class="vocab-main" role="button" tabindex="0" onclick="openDetail(${w.id})"><div><span class="badge">${getTheme(w.theme)?.icon||''} ${w.typeId}</span> ${x.wrong?`<span class="badge">Salah ${x.wrong}×</span>`:''}</div><div class="vocab-word">${w.korean}</div><div class="vocab-meaning">${w.meaning}</div><div class="small muted">[${w.romanization}] · Mastery ${x.mastery}/5</div><div class="vocab-example"><span class="kr">${w.exampleKr}</span><br>${w.exampleId}</div></div><div class="vocab-actions"><button onclick="event.stopPropagation();speakKorean('${w.korean}')" aria-label="Dengarkan">🔊</button><button onclick="event.stopPropagation();toggleFavorite(${w.id},this)" aria-label="Favorit">${favorites.has(w.id)?'♥️':'♡'}</button><button onclick="event.stopPropagation();quickMastery(${w.id})" aria-label="Tandai dipelajari">${x.mastery>=5?'🏆':'✓'}</button></div></article>`}
+function toggleFavorite(id,btn){favorites.has(id)?favorites.delete(id):favorites.add(id);save(KEYS.favorites,[...favorites]);if(btn)btn.textContent=favorites.has(id)?'♥️':'♡';toast(favorites.has(id)?'Ditambahkan ke favorit.':'Dihapus dari favorit.');if(listMode==='favorite')updateListCards()}
+function quickMastery(id){const x=p(id);setP(id,{mastery:Math.min(5,x.mastery+1),status:x.mastery+1>=5?'MASTERED':'LEARNING',lastReviewed:today()});markActivity(id);toast('Progres kata diperbarui.');updateListCards()}
+function startFlashFromCurrent(){const ids=filteredWords().map(w=>w.id);if(!ids.length)return toast('Belum ada kata untuk dipelajari.');startFlash({ids,count:Math.min(30,ids.length),order:'random',mode:'mixed'})}
+
+/* =========================
+   WORD DETAIL
+========================= */
+function openDetail(id){const w=vocabularyData.find(x=>x.id===id),x=p(id),t=getTheme(w.theme);document.getElementById('detailContent').innerHTML=`<button class="icon-btn modal-close" onclick="closeModal('detailModal')" aria-label="Tutup">✕</button><div class="detail-word">${w.korean}</div><div class="muted">[${w.romanization}]</div><h2>${w.meaning}</h2><span class="badge">${w.type} · ${w.typeId}</span><p><button class="btn secondary" onclick="speakKorean('${w.korean}')">🔊 Dengarkan</button></p><hr style="border:0;border-top:1px solid var(--border)"><h3>Contoh Kalimat</h3><p class="kr" style="font-size:1.2rem">${w.exampleKr}</p><p class="muted">${w.exampleId}</p><button class="btn secondary" onclick="speakKorean('${w.exampleKr}')">🔊 Dengarkan Kalimat</button><hr style="border:0;border-top:1px solid var(--border);margin:20px 0"><p><b>Tema</b><br>${t.icon} ${t.name}</p><p><b>Mastery</b><br><span style="font-size:1.5rem">${'⭐'.repeat(x.mastery)}${'☆'.repeat(5-x.mastery)}</span></p><div class="grid" style="grid-template-columns:1fr 1fr"><button class="btn peach" onclick="toggleFavorite(${id});openDetail(${id})">${favorites.has(id)?'♥ Hapus Favorit':'♡ Tambah Favorit'}</button><button class="btn" onclick="closeModal('detailModal');startFlash({ids:[${id}],count:1,mode:'kr-id'})">🃏 Pelajari</button></div>`;document.getElementById('detailModal').classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+
+/* =========================
+   STUDY FILTERS / FLASHCARD LOGIC
+========================= */
+function themeOptions(){return`<option value="all">Semua Tema</option>${themes.map(t=>`<option value="${t.id}">${t.icon} ${t.name}</option>`).join('')}`}
+function renderFlashSetup(){flashSession=null;document.getElementById('flashView').innerHTML=`<div class="page-title"><span class="eyebrow">Fitur Utama</span><h1>🃏 Flashcard</h1><p class="muted">Atur sesi sesuai kebutuhanmu. Kata sulit mendapat kesempatan review lebih sering.</p></div><article class="card setup-card section"><div class="setup-grid"><label class="field">Tema<select id="fTheme">${themeOptions()}</select></label><label class="field">Jumlah<select id="fCount"><option>5</option><option selected>10</option><option>20</option><option>30</option><option>50</option><option value="all">Semua</option></select></label><label class="field">Urutan<select id="fOrder"><option value="random">Acak</option><option value="ordered">Urut</option></select></label><label class="field">Mode<select id="fMode"><option value="kr-id">Korea → Indonesia</option><option value="id-kr">Indonesia → Korea</option><option value="mixed" selected>Campuran</option></select></label><label class="field">Jenis Kosakata<select id="fType"><option value="all">Semua</option><option value="명사">Kata Benda</option><option value="동사">Kata Kerja</option><option value="형용사">Kata Sifat</option><option value="부사">Kata Keterangan</option></select></label><label class="field">Status<select id="fStatus"><option value="all">Semua</option><option value="new">Belum Belajar</option><option value="learning">Sedang Dipelajari</option><option value="difficult">Sulit</option><option value="mastered">Dikuasai</option><option value="favorite">Favorit</option></select></label></div><button class="btn full" style="margin-top:18px" onclick="startFlashFromSetup()">Mulai Belajar</button></article><p class="muted small" style="text-align:center">Shortcut desktop: Space = balik kartu · 1 = Sulit · 2 = Ragu · 3 = Mudah</p>`}
+function poolFromFilters(o){let a=o.ids?vocabularyData.filter(w=>o.ids.includes(w.id)):[...vocabularyData];if(o.theme&&o.theme!=='all')a=a.filter(w=>w.theme===o.theme);if(o.type&&o.type!=='all')a=a.filter(w=>w.type===o.type);if(o.status==='new')a=a.filter(w=>p(w.id).mastery===0);if(o.status==='learning')a=a.filter(w=>p(w.id).mastery>0&&p(w.id).mastery<5);if(o.status==='difficult')a=a.filter(w=>p(w.id).wrong>0);if(o.status==='mastered')a=a.filter(w=>p(w.id).mastery>=5);if(o.status==='favorite')a=a.filter(w=>favorites.has(w.id));if(o.order!=='ordered')a=shuffle(a);const count=o.count==='all'?a.length:+o.count;return a.slice(0,count)}
+function startFlashFromSetup(){startFlash({theme:document.getElementById('fTheme').value,count:document.getElementById('fCount').value,order:document.getElementById('fOrder').value,mode:document.getElementById('fMode').value,type:document.getElementById('fType').value,status:document.getElementById('fStatus').value})}
+function startFlash(o){const cards=poolFromFilters(o);if(!cards.length)return toast('Tidak ada kosakata yang cocok dengan filter.');flashSession={cards,index:0,mode:o.mode||'mixed',flipped:false,answers:[]};currentView='flash';document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('flashView').classList.add('active');renderNav();renderFlashCard();window.scrollTo(0,0)}
+function flashDirection(){if(flashSession.mode==='mixed')return Math.random()<.5?'kr-id':'id-kr';return flashSession.mode}
+function renderFlashCard(){const s=flashSession,w=s.cards[s.index];if(!w)return finishFlash();s.direction=s.direction||flashDirection();const krFirst=s.direction==='kr-id';document.getElementById('flashView').innerHTML=`<div class="session-top"><button class="btn secondary" onclick="renderFlashSetup()">✕ Selesai</button><b>${s.index+1} / ${s.cards.length}</b></div><div class="progress-track"><div class="progress-fill" style="width:${(s.index)/s.cards.length*100}%"></div></div><div class="flash-scene section" id="flashScene"><article class="flashcard ${s.flipped?'flipped':''}" id="flashcard" tabindex="0" role="button" aria-label="Balik flashcard" onclick="flipCard()"><div class="flash-face"><div>${krFirst?`<div class="flash-word">${w.korean}</div><div class="muted">[${w.romanization}]</div><button class="icon-btn" style="margin-top:20px" onclick="event.stopPropagation();speakKorean('${w.korean}')">🔊 Audio</button>`:`<div class="flash-meaning">${w.meaning}</div>`}<p class="muted">Ketuk untuk melihat arti</p></div></div><div class="flash-face flash-back"><div>${krFirst?`<div class="flash-word" style="font-size:2.5rem">${w.korean}</div><div class="flash-meaning">${w.meaning}</div>`:`<div class="flash-word">${w.korean}</div><div class="muted">[${w.romanization}]</div><div class="flash-meaning" style="font-size:1.4rem">${w.meaning}</div>`}<span class="badge">${w.type} · ${w.typeId}</span><div class="flash-example">${w.exampleKr}</div><div class="muted">${w.exampleId}</div><button class="icon-btn" style="margin-top:14px" onclick="event.stopPropagation();speakKorean('${w.exampleKr}')">🔊</button></div></div></article></div><div class="rating-grid"><button class="btn danger" onclick="rateFlash('hard')">😣<br>Sulit</button><button class="btn peach" onclick="rateFlash('review')">🤔<br>Masih Ingat</button><button class="btn mint" onclick="rateFlash('easy')">😊<br>Mudah</button></div><div class="swipe-hint">Geser kiri = Sulit · Geser kanan = Mudah</div>`;bindSwipe()}
+function flipCard(){playSound('flip');flashSession.flipped=!flashSession.flipped;document.getElementById('flashcard')?.classList.toggle('flipped',flashSession.flipped)}
+function rateFlash(r){playSound(r==='hard'?'wrong':r==='easy'?'correct':'click');const w=flashSession.cards[flashSession.index],x=p(w.id);let m=x.mastery,wrong=x.wrong,correct=x.correct;if(r==='hard'){m=Math.max(1,m-1);wrong++}if(r==='review'){m=Math.min(4,Math.max(1,m+1));correct++}if(r==='easy'){m=Math.min(5,m+2);correct++}setP(w.id,{mastery:m,wrong,correct,status:m>=5?'MASTERED':m>=2?'REVIEW':'LEARNING',lastReviewed:today()});markActivity(w.id);flashSession.answers.push(r);flashSession.index++;flashSession.flipped=false;flashSession.direction=null;renderFlashCard()}
+function finishFlash(){playSound('finish');confetti();document.getElementById('flashView').innerHTML=`<article class="card empty"><div class="emoji">🎉</div><h1 class="kr">잘했어요!</h1><h2>Sesi belajar selesai!</h2><p class="muted">Kamu telah meninjau ${flashSession.cards.length} kosakata.</p><div class="grid" style="max-width:420px;margin:auto"><button class="btn" onclick="renderFlashSetup()">🃏 Mulai Sesi Baru</button><button class="btn secondary" onclick="navigate('home')">🏠 Kembali ke Beranda</button></div></article>`}
+function bindSwipe(){const el=document.getElementById('flashScene');let start=0;el.addEventListener('touchstart',e=>start=e.touches[0].clientX,{passive:true});el.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-start;if(Math.abs(d)>70)rateFlash(d>0?'easy':'hard')},{passive:true})}
+
+/* =========================
+   PRACTICE MODES / QUIZ ENGINE
+========================= */
+const modes=[['meaning','🅰️','Pilih Arti','Pilih arti bahasa Indonesia.'],['korean','🇰🇷','Pilih Korea','Pilih kosakata Korea.'],['type-id','⌨️','Ketik Arti','Tulis arti kata.'],['type-kr','✍️','Ketik Hangul','Tulis jawaban Korea.'],['truefalse','⭕','Benar / Salah','Nilai pasangan kata.'],['sentence','🧩','Isi Kalimat','Lengkapi contoh kalimat.'],['listening','🔊','Listening','Dengarkan lalu pilih arti.'],['matching','🔗','Matching','Cocokkan lima pasangan.'],['memory','🧠','Memory Card','Temukan pasangan kartu.'],['speed','⏱️','60 Detik','Jawab sebanyak mungkin.']];
+function renderPractice(){document.getElementById('practiceView').innerHTML=`<div class="page-title"><span class="eyebrow">Pilih Mode Latihan</span><h1>🎮 Latihan & Kuis</h1><p class="muted">Setiap soal dibuat otomatis dari database kosakata.</p></div><div class="grid mode-grid section">${modes.map(m=>`<button class="mode-card" onclick="openQuizSetup('${m[0]}')"><b>${m[1]}</b><strong>${m[2]}</strong><span>${m[3]}</span></button>`).join('')}</div>`}
+function openQuizSetup(mode){currentView='practice';document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('quizView').classList.add('active');document.getElementById('quizView').innerHTML=`<div class="page-title"><button class="btn secondary" onclick="navigate('practice')">← Kembali</button><h1>${modes.find(m=>m[0]===mode)?.[2]}</h1></div><article class="card setup-card section"><div class="setup-grid"><label class="field">Tema<select id="qTheme">${themeOptions()}</select></label><label class="field">Jumlah Soal<select id="qCount"><option>5</option><option selected>10</option><option>20</option><option>30</option></select></label><label class="field">Jenis Kosakata<select id="qType"><option value="all">Semua</option><option value="명사">Kata Benda</option><option value="동사">Kata Kerja</option><option value="형용사">Kata Sifat</option><option value="부사">Kata Keterangan</option></select></label><label class="field">Status<select id="qStatus"><option value="all">Semua</option><option value="new">Belum Belajar</option><option value="learning">Sedang Dipelajari</option><option value="difficult">Sulit</option><option value="mastered">Dikuasai</option><option value="favorite">Favorit</option></select></label></div><button class="btn full" style="margin-top:18px" onclick="startQuiz('${mode}')">Mulai Latihan</button></article>`;window.scrollTo(0,0)}
+function startQuickQuiz(){startQuiz('meaning',{theme:'all',count:10,type:'all',status:'all'})}
+function startQuiz(mode,opts){const o=opts||{theme:document.getElementById('qTheme').value,count:document.getElementById('qCount').value,type:document.getElementById('qType').value,status:document.getElementById('qStatus').value};let pool=poolFromFilters({...o,order:'random'});if(mode==='matching'||mode==='memory')pool=shuffle(poolFromFilters({...o,count:5,order:'random'}));if(!pool.length)return toast('Tidak ada kosakata yang cocok dengan filter.');if((mode==='matching'||mode==='memory')&&pool.length<5)return toast('Pilih filter yang memiliki minimal 5 kosakata.');quizSession={mode,questions:pool,index:0,correct:0,incorrect:0,streak:0,maxStreak:0,review:[],locked:false,startTime:Date.now(),timeLeft:60,matched:0,moves:0};document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('quizView').classList.add('active');if(mode==='matching')renderMatching();else if(mode==='memory')renderMemory();else{renderQuizQuestion();if(mode==='speed')startSpeedTimer()}window.scrollTo(0,0)}
+function distractors(w,key){return shuffle(vocabularyData.filter(x=>x.id!==w.id&&x[key]!==w[key])).slice(0,3)}
+function renderQuizQuestion(){const s=quizSession,w=s.questions[s.index%s.questions.length];if(!w)return finishQuiz();s.locked=false;let body='';const optionButtons=(opts,answer)=>`<div class="answers">${shuffle(opts).map(o=>`<button class="answer-btn" data-value="${esc(o)}" onclick="answerQuiz(this.dataset.value,'${esc(answer)}',this)">${esc(o)}</button>`).join('')}</div>`;
+ if(s.mode==='meaning'||s.mode==='speed'){body=`<div class="quiz-word">${w.korean}</div><div class="quiz-prompt">Apa artinya?</div>${optionButtons([w.meaning,...distractors(w,'meaning').map(x=>x.meaning)],w.meaning)}`}
+ if(s.mode==='korean'){body=`<div class="quiz-prompt">Manakah bahasa Korea untuk:</div><div class="flash-meaning" style="text-align:center;margin:16px">${w.meaning}</div>${optionButtons([w.korean,...distractors(w,'korean').map(x=>x.korean)],w.korean)}`}
+ if(s.mode==='type-id'||s.mode==='type-kr'){const kr=s.mode==='type-kr';body=`<div class="${kr?'flash-meaning':'quiz-word'}" style="text-align:center">${kr?w.meaning:w.korean}</div><p class="quiz-prompt">${kr?'Tuliskan dalam bahasa Korea:':'Ketik artinya:'}</p><input id="quizInput" class="quiz-input ${kr?'kr':''}" lang="${kr?'ko':'id'}" autocomplete="off" autocapitalize="off"><button class="btn full" style="margin-top:10px" onclick="submitTyped('${kr?esc(w.korean):esc(w.meaning)}')">Periksa Jawaban</button>`}
+ if(s.mode==='truefalse'){const truth=Math.random()>.5,shown=truth?w.meaning:distractors(w,'meaning')[0].meaning;s.truth=truth;body=`<div class="quiz-word">${w.korean}</div><div class="flash-meaning" style="text-align:center">= ${shown}</div>${optionButtons(['⭕ Benar','❌ Salah'],truth?'⭕ Benar':'❌ Salah')}`}
+ if(s.mode==='sentence'){const blank=w.exampleKr.replace(w.korean,'___');body=`<div class="flash-example" style="text-align:center;font-size:1.35rem">${blank===w.exampleKr?'___ — '+w.exampleKr:w.exampleKr.replace(w.korean,'___')}</div><p class="quiz-prompt">${w.exampleId}</p>${optionButtons([w.korean,...distractors(w,'korean').map(x=>x.korean)],w.korean)}`}
+ if(s.mode==='listening'){body=`<div style="text-align:center;padding:20px"><button class="btn" onclick="speakKorean('${w.korean}')" style="font-size:1.2rem">🔊 Dengarkan</button><p class="muted">Tekan tombol lalu pilih artinya.</p></div>${optionButtons([w.meaning,...distractors(w,'meaning').map(x=>x.meaning)],w.meaning)}`}
+ document.getElementById('quizView').innerHTML=`<div class="session-top"><button class="btn secondary" onclick="navigate('practice')">✕ Selesai</button><b>${s.mode==='speed'?`⏱ <span id="timer">${s.timeLeft}</span> detik · `:''}🔥 Score: ${s.correct}</b></div><div class="progress-track"><div class="progress-fill" style="width:${s.mode==='speed'?Math.min(100,(60-s.timeLeft)/60*100):s.index/s.questions.length*100}%"></div></div><article class="card quiz-card section">${body}<div id="quizFeedback"></div></article>`;setTimeout(()=>document.getElementById('quizInput')?.focus(),0)}
+function normalize(s){return s.toLowerCase().trim().replace(/\s+/g,' ')}
+function submitTyped(answer){const inp=document.getElementById('quizInput');if(!inp.value.trim())return toast('Tulis jawaban dahulu.');answerQuiz(inp.value,answer,inp)}
+function answerQuiz(given,answer,el){const s=quizSession;if(s.locked)return;s.locked=true;const ok=normalize(given)===normalize(answer)||answer.split(' / ').some(x=>normalize(x)===normalize(given));playSound(ok?'correct':'wrong');const w=s.questions[s.index%s.questions.length],x=p(w.id);if(ok){s.correct++;s.streak++;s.maxStreak=Math.max(s.maxStreak,s.streak);setP(w.id,{mastery:Math.min(5,x.mastery+1),correct:x.correct+1,status:x.mastery+1>=5?'MASTERED':'REVIEW',lastReviewed:today()});el?.classList?.add('correct')}else{s.incorrect++;s.streak=0;s.review.push({word:w,given});setP(w.id,{mastery:Math.max(1,x.mastery-1),wrong:x.wrong+1,status:'LEARNING',lastReviewed:today()});el?.classList?.add('wrong')}markActivity(w.id);const fb=document.getElementById('quizFeedback');fb.innerHTML=`<div class="feedback"><b>${ok?'✅ Benar!':'❌ Belum tepat.'}</b><br><span class="kr">${w.korean}</span> = ${w.meaning}<br><span class="kr">${w.exampleKr}</span><br><span class="muted">${w.exampleId}</span></div>`;if(s.mode==='speed'){setTimeout(nextQuiz,450)}else{fb.innerHTML+=`<button class="btn full" style="margin-top:10px" onclick="nextQuiz()">${s.index+1>=s.questions.length?'Lihat Hasil':'Soal Berikutnya'}</button>`}}
+function nextQuiz(){quizSession.index++;if(quizSession.mode==='speed'){quizSession.locked=false;quizSession.questions=shuffle(vocabularyData).slice(0,Math.max(30,vocabularyData.length));renderQuizQuestion()}else if(quizSession.index>=quizSession.questions.length)finishQuiz();else renderQuizQuestion()}
+function startSpeedTimer(){clearInterval(startSpeedTimer.t);startSpeedTimer.t=setInterval(()=>{if(!quizSession||quizSession.mode!=='speed')return clearInterval(startSpeedTimer.t);quizSession.timeLeft--;const t=document.getElementById('timer');if(t)t.textContent=quizSession.timeLeft;if(quizSession.timeLeft<=0){clearInterval(startSpeedTimer.t);finishQuiz()}},1000)}
+
+/* =========================
+   MATCHING / MEMORY
+========================= */
+function renderMatching(){const s=quizSession,cards=shuffle(s.questions.flatMap(w=>[{id:w.id,side:'kr',text:w.korean},{id:w.id,side:'id',text:w.meaning}]));s.gameCards=cards;s.selected=null;document.getElementById('quizView').innerHTML=`<div class="session-top"><button class="btn secondary" onclick="navigate('practice')">✕ Selesai</button><b>Pasangan: <span id="matchCount">0</span> / ${s.questions.length}</b></div><article class="card quiz-card"><h2>🔗 Cocokkan Pasangan</h2><p class="muted">Pilih satu kartu Korea dan satu kartu Indonesia.</p><div class="match-grid">${cards.map((c,i)=>`<button class="match-card ${c.side==='kr'?'kr':''}" data-i="${i}" onclick="pickMatch(${i},this)">${c.text}</button>`).join('')}</div></article>`}
+function pickMatch(i,el){const s=quizSession,c=s.gameCards[i];if(el.classList.contains('matched'))return;if(s.selected==null){playSound('click');s.selected=i;el.classList.add('selected');return}const prev=s.gameCards[s.selected],prevEl=document.querySelector(`[data-i="${s.selected}"]`);if(s.selected!==i&&prev.id===c.id&&prev.side!==c.side){playSound('match');el.classList.add('matched');prevEl.classList.remove('selected');prevEl.classList.add('matched');s.matched++;s.correct++;const x=p(c.id);setP(c.id,{mastery:Math.min(5,x.mastery+1),correct:x.correct+1,lastReviewed:today()});markActivity(c.id);document.getElementById('matchCount').textContent=s.matched;s.selected=null;if(s.matched===s.questions.length)setTimeout(finishQuiz,500)}else{playSound('wrong');el.classList.add('wrong');prevEl.classList.add('wrong');s.incorrect++;s.streak=0;s.selected=null;setTimeout(()=>{el.classList.remove('wrong');prevEl.classList.remove('wrong','selected')},450)}}
+function formatDuration(ms){const total=Math.max(0,Math.floor(ms/1000)),minutes=Math.floor(total/60),seconds=total%60;return `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`}
+function renderMemory(){const s=quizSession;s.gameCards=shuffle(s.questions.flatMap(w=>[{id:w.id,text:w.korean,side:'kr'},{id:w.id,text:w.meaning,side:'id'}]));s.open=[];s.found=new Set();s.gameStart=Date.now();clearInterval(startMemoryTimer.t);document.getElementById('quizView').innerHTML=`<div class="session-top"><button class="btn secondary" onclick="navigate('practice')">✕ Selesai</button><b>⏱ <span id="memoryTime">00:00</span> · Langkah: <span id="moves">0</span> · Pasangan: <span id="found">0</span>/5</b></div><article class="card quiz-card"><h2>🧠 Memory Card</h2><p class="muted">Temukan 5 pasang kartu secepat mungkin.</p><div class="memory-grid">${s.gameCards.map((c,i)=>`<button class="memory-card covered ${c.side==='kr'?'kr':''}" data-m="${i}" onclick="flipMemory(${i},this)">${c.text}</button>`).join('')}</div></article>`;startMemoryTimer()}
+function startMemoryTimer(){clearInterval(startMemoryTimer.t);startMemoryTimer.t=setInterval(()=>{if(!quizSession||quizSession.mode!=='memory')return clearInterval(startMemoryTimer.t);const timer=document.getElementById('memoryTime');if(timer)timer.textContent=formatDuration(Date.now()-quizSession.gameStart)},250)}
+function flipMemory(i,el){const s=quizSession;if(s.open.includes(i)||s.found.has(s.gameCards[i].id)||s.open.length>=2)return;playSound('flip');el.classList.remove('covered');s.open.push(i);if(s.open.length===2){s.moves++;document.getElementById('moves').textContent=s.moves;const[a,b]=s.open,ca=s.gameCards[a],cb=s.gameCards[b];if(ca.id===cb.id&&ca.side!==cb.side){playSound('match');s.found.add(ca.id);s.open=[];document.getElementById('found').textContent=s.found.size;const x=p(ca.id);setP(ca.id,{mastery:Math.min(5,x.mastery+1),correct:x.correct+1,lastReviewed:today()});markActivity(ca.id);if(s.found.size===5){s.elapsedTime=Date.now()-s.gameStart;clearInterval(startMemoryTimer.t);setTimeout(finishQuiz,600)}}else{playSound('wrong');setTimeout(()=>{document.querySelector(`[data-m="${a}"]`)?.classList.add('covered');document.querySelector(`[data-m="${b}"]`)?.classList.add('covered');s.open=[]},700)}}}
+
+/* =========================
+   RESULTS
+========================= */
+function finishQuiz(){clearInterval(startSpeedTimer.t);clearInterval(startMemoryTimer.t);playSound('finish');const s=quizSession;if(s.mode==='memory'){const elapsed=s.elapsedTime||Date.now()-s.gameStart;confetti();document.getElementById('quizView').innerHTML=`<article class="card quiz-card"><div class="empty"><div class="emoji">🎉</div><h1 class="kr">잘했어요!</h1><h2>Semua Pasangan Ditemukan!</h2><p class="muted">Skor Memory Card dihitung berdasarkan kecepatan dan jumlah langkah.</p><div class="result-score">⏱ ${formatDuration(elapsed)}</div><h2>${s.moves} Langkah</h2><p>🧠 Pasangan ditemukan: 5 / 5</p></div><div class="grid" style="margin-top:18px"><button class="btn" onclick="openQuizSetup('memory')">🧠 Main Lagi</button><button class="btn secondary" onclick="navigate('home')">🏠 Kembali ke Beranda</button></div></article>`;return}const total=s.mode==='matching'?s.correct+s.incorrect:s.mode==='speed'?s.correct+s.incorrect:s.questions.length,pct=total?Math.round(s.correct/total*100):0;confetti();document.getElementById('quizView').innerHTML=`<article class="card quiz-card"><div class="empty"><div class="emoji">🎉</div><h1 class="kr">잘했어요!</h1><h2>Latihan Selesai!</h2><div class="result-score">${s.correct} / ${total}</div><h2>${pct}% · ${pct>=90?'⭐ Excellent!':pct>=70?'Bagus sekali!':'Terus berlatih!'}</h2><p>✅ Benar: ${s.correct} &nbsp; ❌ Salah: ${s.incorrect} &nbsp; 🔥 Streak: ${s.maxStreak}</p></div>${s.review.length?`<h3>Perlu Dipelajari Lagi</h3>${s.review.slice(0,12).map(r=>`<div class="review-item"><b class="kr">${r.word.korean}</b> — ${r.word.meaning}<br><span class="muted">Jawabanmu: ${esc(r.given)} ❌</span><br><span class="kr">${r.word.exampleKr}</span> · ${r.word.exampleId}</div>`).join('')}`:''}<div class="grid" style="margin-top:18px"><button class="btn" onclick="openQuizSetup('${s.mode}')">🎮 Main Lagi</button><button class="btn secondary" onclick="startFlash({ids:[${s.review.map(r=>r.word.id).join(',')}],count:'all',mode:'mixed'})" ${s.review.length?'':'disabled'}>🃏 Pelajari Soal Salah</button><button class="btn secondary" onclick="navigate('home')">🏠 Kembali ke Beranda</button></div></article>`}
+
+/* =========================
+   PROGRESS / STREAK / SETTINGS
+========================= */
+function renderProgress(){const s=stats(),pct=masteryPct(vocabularyData),unseen=s.total-s.learned,learning=s.learned-s.mastered;const days=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];let week=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);week.push({name:days[d.getDay()],done:streak.dates.includes(d.toLocaleDateString('en-CA'))})}document.getElementById('progressView').innerHTML=`<div class="page-title"><span class="eyebrow">Statistik Belajar</span><h1>📊 Progres Belajar</h1><p class="muted">Progres tersimpan otomatis di perangkat ini.</p></div><div class="grid progress-summary section"><div class="card stat"><div class="num">${s.total}</div><div class="label">Total Kosakata</div></div><div class="card stat"><div class="num">${s.learned}</div><div class="label">Dipelajari</div></div><div class="card stat"><div class="num">${s.mastered}</div><div class="label">Dikuasai</div></div><div class="card stat"><div class="num">${s.difficult}</div><div class="label">Perlu Diulang</div></div></div><article class="card goal-card section"><div class="goal-top"><h2>TOPIK Level 1</h2><b>${pct}%</b></div><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div><div class="grid stats-grid" style="margin-top:20px"><div><b>🔵 ${unseen}</b><br><span class="muted small">Belum Dipelajari</span></div><div><b>🟡 ${learning}</b><br><span class="muted small">Sedang Dipelajari</span></div><div><b>🟢 ${s.mastered}</b><br><span class="muted small">Dikuasai</span></div></div></article><div class="grid daily-goal-grid section"><article class="card goal-card"><h2>Progres Berdasarkan Tema</h2>${themes.map(t=>{const ws=vocabularyData.filter(w=>w.theme===t.id),x=masteryPct(ws);return`<div class="progress-theme"><div class="goal-top"><span>${t.icon} ${t.name}</span><b>${x}%</b></div><div class="progress-track"><div class="progress-fill" style="width:${x}%"></div></div></div>`}).join('')}</article><div><article class="card goal-card"><h2>🔥 Study Streak</h2><div style="font-size:2.4rem;font-weight:850">${currentStreak()} Hari</div><div class="streak-week">${week.map(d=>`<div class="day ${d.done?'done':''}">${d.name}<br>${d.done?'✓':'·'}</div>`).join('')}</div></article><article class="card goal-card section"><h2>Pengaturan</h2><button class="btn secondary full" onclick="toggleSound()">${settings.sound?'🔊 Matikan Efek Suara':'🔇 Nyalakan Efek Suara'}</button><button class="btn secondary full" style="margin-top:10px" onclick="toggleDark()">${settings.dark?'☀️ Light Mode':'🌙 Dark Mode'}</button><button class="btn danger full" style="margin-top:10px" onclick="document.getElementById('confirmModal').classList.add('open')">Reset Progress</button><p class="muted small">Data belajar hanya disimpan di browser perangkat ini.</p></article></div></div>`}
+function toggleDark(){settings.dark=!settings.dark;save(KEYS.settings,settings);document.body.classList.toggle('dark',settings.dark);document.getElementById('themeToggle').textContent=settings.dark?'☀️':'🌙';if(currentView==='progress')renderProgress()}
+document.getElementById('themeToggle').onclick=toggleDark;document.getElementById('themeToggle').textContent=settings.dark?'☀️':'🌙';
+document.getElementById('soundToggle').onclick=toggleSound;updateSoundButton();
+document.getElementById('confirmReset').onclick=()=>{Object.values(KEYS).forEach(k=>localStorage.removeItem(k));progress={};favorites=new Set();streak={dates:[]};daily={target:10,date:'',words:[]};settings={dark:false,sound:true};document.body.classList.remove('dark');updateSoundButton();closeModal('confirmModal');navigate('home');toast('Seluruh progres telah dihapus.')};
+document.querySelectorAll('.modal-wrap').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
+document.addEventListener('keydown',e=>{if(document.activeElement?.matches('input,select,textarea')){if(e.key==='Enter'&&document.getElementById('quizInput'))document.querySelector('#quizInput + .btn')?.click();return}if(flashSession&&document.getElementById('flashcard')){if(e.code==='Space'){e.preventDefault();flipCard()}if(e.key==='1')rateFlash('hard');if(e.key==='2')rateFlash('review');if(e.key==='3')rateFlash('easy')}if(e.key==='Escape')document.querySelectorAll('.modal-wrap.open').forEach(m=>closeModal(m.id))});
+function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<35;i++){const c=document.createElement('i');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.background=['#F6C85F','#FFB59D','#B9DBC8','#fff'][i%4];c.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),2300)}}
+
+/* =========================
+   DATABASE VALIDATION / INIT
+========================= */
+const duplicateIds=vocabularyData.filter((w,i,a)=>a.findIndex(x=>x.id===w.id)!==i);const invalid=vocabularyData.filter(w=>!w.korean||!w.meaning||!w.romanization||!w.type||!w.theme||!w.exampleKr||!w.exampleId||!getTheme(w.theme));if(duplicateIds.length||invalid.length)console.error('Database validation failed',{duplicateIds,invalid});
+renderNav();renderHome();
+  </script>
+</body>
+</html>
