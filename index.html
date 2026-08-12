@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#facc15">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<title>TOPIK I Vocabulary Master — Bundle Vol. 1–5</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#fffaf2;color:#26231f}
+body.viewer-open{overflow:hidden}
+.wrap{max-width:900px;margin:auto;padding:28px 18px 48px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;font-weight:700;gap:12px}
+.badge{background:#fff;border:1px solid #eadfce;border-radius:999px;padding:8px 12px;font-size:12px;color:#756e65;white-space:nowrap}
+.hero{background:#fff;border:1px solid #eadfce;border-radius:28px;padding:36px 22px;text-align:center;box-shadow:0 14px 35px rgba(83,63,35,.08)}
+.hero small{font-weight:800;letter-spacing:.12em;color:#936d13}.hero h1{font-size:clamp(32px,8vw,52px);line-height:1.05;margin:10px 0}
+.hero p{color:#756e65;line-height:1.7;max-width:600px;margin:auto}
+.note{display:inline-block;margin-top:18px;padding:10px 13px;border-radius:14px;background:#fff5cc;font-size:13px;font-weight:700}
+h2{margin:30px 0 5px}.sub{margin:0 0 14px;color:#756e65;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+.card{width:100%;display:grid;grid-template-columns:76px 1fr;gap:15px;align-items:center;background:#fff;border:1px solid #eadfce;border-radius:22px;padding:17px;color:inherit;box-shadow:0 8px 24px rgba(83,63,35,.06);text-align:left;cursor:pointer;font:inherit;transition:.18s transform,.18s box-shadow}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(83,63,35,.10)}
+.card:active{transform:scale(.99)}
+.card:focus-visible{outline:3px solid #f6c85f;outline-offset:3px}
+.cover{height:96px;border-radius:15px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;font-weight:800}.v1{background:#f6c85f}.v2{background:#ffb59d}.v3{background:#b9dbc8}.v4{background:#d9d1f3}.v5{background:#bfe0f5}
+.cover small{font-size:8px}.cover strong{font-size:27px}.meta{font-size:11px;font-weight:800;letter-spacing:.08em;color:#936d13;text-transform:uppercase}
+.card h3{margin:4px 0 5px}.card p{margin:0;color:#756e65;font-size:13px;line-height:1.5}.cta{margin-top:10px;font-size:13px;font-weight:800}
+footer{text-align:center;color:#756e65;font-size:12px;margin-top:28px;line-height:1.6}
+#viewer{position:fixed;inset:0;z-index:9999;background:#fff;display:none}
+#viewer.active{display:flex;flex-direction:column}
+.viewer-bar{height:58px;flex:none;display:flex;align-items:center;gap:10px;padding:8px 12px;background:#fffaf2;border-bottom:1px solid #eadfce;box-shadow:0 4px 14px rgba(83,63,35,.06);position:relative;z-index:2}
+.back-btn{height:40px;border:1px solid #eadfce;background:#fff;border-radius:12px;padding:0 13px;font-weight:800;color:#26231f;cursor:pointer}
+.viewer-title{min-width:0;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viewer-title small{display:block;font-size:10px;color:#756e65;font-weight:700}
+#volumeFrame{width:100%;height:calc(100dvh - 58px);border:0;background:#fff;flex:1}
+.loading{position:absolute;inset:58px 0 0;display:grid;place-items:center;background:#fffaf2;color:#756e65;font-weight:700;z-index:1}
+.loading.hidden{display:none}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}.wrap{padding-top:36px}}
+</style>
+</head>
+<body>
+<main class="wrap" id="bundleHome">
+<div class="top"><span>🇰🇷 Belajar bersama Tsuha</span><span class="badge">Bundle 5 Volume</span></div>
+<section class="hero">
+<small>AKSES PRODUK DIGITAL</small>
+<h1>TOPIK I<br>Vocabulary Master</h1>
+<p>Selamat belajar! Kamu memiliki akses ke paket lengkap TOPIK I Vocabulary Master Volume 1 sampai Volume 5. Pilih volume yang ingin kamu pelajari.</p>
+<div class="note">✨ Akses lengkap Volume 1–5</div>
+</section>
+<h2>Pilih Volume</h2><p class="sub">Pilih volume untuk langsung belajar di dalam bundle ini.</p>
+<section class="grid">
+<button class="card" type="button" data-volume="1"><div class="cover v1"><small>TOPIK I<br>VOCABULARY</small><strong>01</strong></div><div><div class="meta">Volume 1</div><h3>Vocabulary Master 1</h3><p>Kosakata inti untuk membangun dasar TOPIK I.</p><div class="cta">Buka Volume 1 →</div></div></button>
+<button class="card" type="button" data-volume="2"><div class="cover v2"><small>TOPIK I<br>VOCABULARY</small><strong>02</strong></div><div><div class="meta">Volume 2</div><h3>Vocabulary Master 2</h3><p>Lanjutan kosakata TOPIK I Level 1–2.</p><div class="cta">Buka Volume 2 →</div></div></button>
+<button class="card" type="button" data-volume="3"><div class="cover v3"><small>TOPIK I<br>VOCABULARY</small><strong>03</strong></div><div><div class="meta">Volume 3</div><h3>Vocabulary Master 3</h3><p>Perluas hafalan dengan kosakata lanjutan TOPIK I.</p><div class="cta">Buka Volume 3 →</div></div></button>
+<button class="card" type="button" data-volume="4"><div class="cover v4"><small>TOPIK I<br>VOCABULARY</small><strong>04</strong></div><div><div class="meta">Volume 4</div><h3>Vocabulary Master 4</h3><p>Penguatan kosakata, ungkapan, dan konteks TOPIK I.</p><div class="cta">Buka Volume 4 →</div></div></button>
+<button class="card" type="button" data-volume="5"><div class="cover v5"><small>TOPIK I<br>VOCABULARY</small><strong>05</strong></div><div><div class="meta">Volume 5</div><h3>Vocabulary Master 5</h3><p>Penguatan lanjutan kosakata TOPIK I.</p><div class="cta">Buka Volume 5 →</div></div></button>
+</section>
+<footer>TOPIK I Vocabulary Master · Bundle Volume 1–5<br>Belajar bersama Tsuha 🇰🇷</footer>
+</main>
+
+<section id="viewer" aria-hidden="true">
+  <div class="viewer-bar">
+    <button class="back-btn" id="backBtn" type="button">← Volume</button>
+    <div class="viewer-title"><small>TOPIK I Vocabulary Master</small><span id="viewerTitle">Volume 1</span></div>
+  </div>
+  <div class="loading" id="loading">Membuka volume…</div>
+  <iframe id="volumeFrame" title="TOPIK I Vocabulary Master" allow="autoplay"></iframe>
+</section>
+
+<script>
+const volumeFrame = document.getElementById('volumeFrame');
+const viewer = document.getElementById('viewer');
+const loading = document.getElementById('loading');
+const viewerTitle = document.getElementById('viewerTitle');
+let currentVolume = null;
+
+function openVolume(number, updateHash=true){
+  if(!["1","2","3","4","5"].includes(String(number))) return;
+  currentVolume = String(number);
+  viewerTitle.textContent = `Volume ${number}`;
+  loading.classList.remove('hidden');
+  viewer.classList.add('active');
+  viewer.setAttribute('aria-hidden','false');
+  document.body.classList.add('viewer-open');
+  if(updateHash && location.hash !== `#volume-${number}`) history.pushState({volume:String(number)},'',`#volume-${number}`);
+  volumeFrame.src = `volume-${number}.html`;
+  window.scrollTo(0,0);
+}
+
+function closeVolume(updateHash=true){
+  currentVolume = null;
+  viewer.classList.remove('active');
+  viewer.setAttribute('aria-hidden','true');
+  document.body.classList.remove('viewer-open');
+  volumeFrame.src = 'about:blank';
+  if(updateHash && location.hash) history.pushState({},'',location.pathname + location.search);
+}
+
+document.querySelectorAll('[data-volume]').forEach(btn=>{
+  btn.addEventListener('click',()=>openVolume(btn.dataset.volume));
+});
+
+document.getElementById('backBtn').addEventListener('click',()=>closeVolume());
+volumeFrame.addEventListener('load',()=>loading.classList.add('hidden'));
+
+window.addEventListener('popstate',()=>{
+  const match = location.hash.match(/^#volume-([1-5])$/);
+  if(match){
+    if(currentVolume !== match[1]) openVolume(match[1],false);
+  }else if(currentVolume){
+    closeVolume(false);
+  }
+});
+
+const initial = location.hash.match(/^#volume-([1-5])$/);
+if(initial) openVolume(initial[1],false);
+</script>
+
+<!-- PWA INSTALL POPUP -->
+<div id="installPopup" class="install-popup" aria-live="polite">
+  <div class="install-box">
+    <button id="closeInstall" aria-label="Tutup">×</button>
+    <div class="install-icon">📱</div>
+    <div class="install-text">
+      <strong id="installTitle">Install TOPIK Vocab</strong>
+      <span id="installDesc">Tambahkan aplikasi ke layar utama agar lebih mudah digunakan.</span>
+      <button id="installBtn" type="button">Install Aplikasi</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.install-popup{display:none;position:fixed;left:16px;right:16px;bottom:20px;z-index:20000}
+.install-box{position:relative;max-width:430px;margin:auto;background:#facc15;color:#1f2937;border-radius:22px;padding:18px;display:flex;align-items:flex-start;gap:14px;box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.install-icon{width:48px;height:48px;flex-shrink:0;border-radius:14px;background:rgba(255,255,255,.58);display:flex;align-items:center;justify-content:center;font-size:26px}
+.install-text{flex:1;padding-right:15px}
+.install-text strong{display:block;font-size:17px;margin-bottom:5px}
+.install-text span{display:block;font-size:13px;line-height:1.5;margin-bottom:12px}
+#installBtn{border:0;background:#111827;color:#fff;padding:10px 16px;border-radius:12px;font-weight:800;font-size:13px;cursor:pointer}
+#closeInstall{position:absolute;right:10px;top:8px;border:0;background:transparent;font-size:24px;cursor:pointer;color:#111827}
+</style>
+
+<script>
+(() => {
+  let deferredPrompt = null;
+
+  const popup = document.getElementById("installPopup");
+  const installBtn = document.getElementById("installBtn");
+  const closeBtn = document.getElementById("closeInstall");
+  const installDesc = document.getElementById("installDesc");
+
+  const isIOS =
+    /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+  const isStandalone =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true;
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", async () => {
+      try {
+        const registration = await navigator.serviceWorker.register("/sw.js");
+        registration.update();
+      } catch (err) {
+        console.error("Service Worker gagal:", err);
+      }
+    });
+  }
+
+  if (isIOS && !isStandalone) {
+    installDesc.innerHTML =
+      'Untuk memasang aplikasi di iPhone/iPad, buka di <b>Safari</b>, tekan <b>Share ⬆️</b>, lalu pilih <b>Add to Home Screen</b>.';
+    installBtn.textContent = "Mengerti";
+    setTimeout(() => popup.style.display = "block", 1500);
+  }
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!isStandalone) popup.style.display = "block";
+  });
+
+  installBtn.addEventListener("click", async () => {
+    if (isIOS) {
+      popup.style.display = "none";
+      return;
+    }
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    popup.style.display = "none";
+  });
+
+  closeBtn.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+
+  window.addEventListener("appinstalled", () => {
+    popup.style.display = "none";
+    deferredPrompt = null;
+  });
+})();
+</script>
+
+</body>
+</html>
